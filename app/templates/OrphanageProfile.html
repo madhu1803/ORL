@@ -16,7 +16,7 @@
       crossorigin="anonymous"
     />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="CSS/home.css" />
+    <link rel="stylesheet" href="{{url_for('static',filename = 'CSS/home.css')}}" />
     <title>Orphanage Profile</title>
   </head>
 
@@ -27,7 +27,7 @@
       <nav
         class="navbar navbar-expand-lg navbar-light bg-dblue shadow p-3 mb-5 bg-white rounded"
       >
-        <a class="navbar-brand" href="donorHome.html">ORL</a>
+        <a class="navbar-brand" href="{{url_for('home')}}">ORL</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -179,6 +179,6 @@
       crossorigin="anonymous"
     ></script>
     <!-- Custom JS -->
-    <script src="JS/home.js"></script>
+    <script src="{{url_for('static', filename='JS/home.js')}}"></script>
   </body>
 </html>

@@ -30,6 +30,10 @@ def signup():
 def home():
     return render_template('DonorHome.html')
 
+@app.route('/orphanage/profile')
+def or_profile():
+    return render_template('OrphanageProfile.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, ssl_context='adhoc')
