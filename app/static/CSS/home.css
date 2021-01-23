@@ -1,0 +1,116 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+/* general styling */
+.txt-dblue {
+  color: #3e5eab !important;
+}
+.txt-blue {
+  color: #5580e9 !important;
+}
+.txt-grey {
+  color: #c1c8e4 !important;
+}
+
+.bg-grey {
+  background-color: #c1c8e4 !important;
+}
+
+.bg-dblue {
+  background-color: #3e5eab !important;
+}
+
+.bg-blue {
+  background-color: #5580e9 !important;
+  color: white;
+}
+
+/* navbar */
+.navbar a {
+  color: white !important;
+}
+
+/* input component */
+.input-container input {
+  border-bottom: 1px solid #c1c8e4 !important;
+  outline: 0;
+  border-width: 0 0 4px;
+}
+
+input::placeholder {
+  color: #c1c8e4 !important;
+}
+
+.input-container .form-label {
+  color: #3e5eab !important;
+}
+/* card styling  */
+
+.card {
+  border: none !important;
+}
+
+/* login and signup styling */
+.login-container,
+.login-container .row,
+.login-container .login-left-container,
+.login-container .login-right-container {
+  width: 100%;
+  height: 100%;
+}
+
+.login-container .login-left-container {
+  background-color: #3e5eab;
+}
+
+.login-container .login-left-container .left-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 300px;
+}
+
+.login-container .login-left-container h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+
+/* login right container */
+.login-container .login-right-container {
+  background-color: white;
+}
+
+.login-container .login-right-container .main-container {
+  padding: 50px;
+}
+
+@media only screen and (min-width: 992px) {
+  .login-container .login-right-container .main-container .field-container {
+    margin-top: 100px;
+  }
+}
+
+/* home page - donor */
+.donor-home-container .nav-link.dropdown-toggle.location {
+  white-space: nowrap;
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.donor-home-container .donor-body-container .card:hover {
+  border: 4px solid lightgray !important;
+}
+
+/* orphanage profile - receiver */
+.orphanage-profile-container .orphanage-body-container .jumbotron {
+  background-color: #171a29;
+  color: white;
+}
