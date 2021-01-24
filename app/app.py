@@ -76,11 +76,11 @@ def getOrphanages():
                 dic.update({"Orphanage_Name": i[j]})
             elif(j == 12):
                 dic.update({"Phone_Number": i[j]})
-            elif(j == 13):
-                dic.update({"Caretaker_Name": i[j]})
             elif(j == 14):
+                dic.update({"Caretaker_Name": i[j]})
+            elif(j == 13):
                 dic.update({"Email": i[j]})
-            elif(j == 15):
+            elif(j == 18):
                 dic.update({"Distance":i[j]})
         final.append(dic)
 
