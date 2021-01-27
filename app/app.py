@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import mysql.connector
 import json
 
@@ -21,6 +21,28 @@ config = {
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+@app.route('/submitLogin', methods=['POST'])
+def submitLogin():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT * FROM users WHERE email_id = %s"
+    cursor.execute(query, (email,))
+    results = cursor.fetchall()
+    print("Results")
+    print(results)
+    final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
+    # print(json.dumps({'results': final}))
+    print("Final\n")
+    print(final)
+    cursor.close()
+    connection.close()
+    if(final[0]["email_id"] == email) and final[0]["password"] == password:
+        return redirect(url_for('home'))
+    else:
+        return "Error"
 
 @app.route('/signup')
 def signup():
