@@ -14,10 +14,9 @@
                               'alt="..."' +
                             '/>' +
                           '<div class="card-body">' +
-                            '<h5 class="card-title">' + item.Orphanage_Name + '</h5>' +
+                            '<h5 class="card-title">' + item.orphanage_name + '</h5>' +
                             '<p class="card-text">' +
-                              'Some quick example text to build on the card title and make up' +
-                              'the bulk of the card\'s content.' +
+                              item.about +
                             '</p>' +
                             '<a href="orphanageProfile.html" class="btn btn-primary"' +
                             '>View More Details</a' +

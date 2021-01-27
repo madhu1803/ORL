@@ -92,11 +92,11 @@
                 />
               </div>
               <div class="col-lg-6">
-                <h1 class="display-4">Orphanage</h1>
-                <p class="lead">
+                <h1 class="display-4" id="name">Orphanage</h1>
+                <p class="lead" id="address">
                   6th cross street , Vadapalani , chennai - 600089.
                 </p>
-                <p class="lead">+91 123456789</p>
+                <p class="lead" id="phone">+91 123456789</p>
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@
               <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
                 <div class="card-body">
                   <h5 class="card-title">About</h5>
-                  <p class="card-text">
+                  <p class="card-text" id="about">
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry. Lorem Ipsum has been the industry's
                     standard dummy text ever since the 1500s, when an unknown
@@ -120,7 +120,7 @@
                     passages, and more recently with desktop publishing software
                     like Aldus PageMaker including versions of Lorem Ipsum.
                   </p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                 </div>
               </div>
             </div>
@@ -128,11 +128,11 @@
               <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
                 <div class="card-body">
                   <h5 class="card-title">Details</h5>
-                  <p class="card-text">Care Taker : Mr. X</p>
-                  <p class="card-text">No of Children : 25</p>
-                  <p class="card-text">Ph No : 044-123456</p>
-                  <p class="card-text">Email : abc@gmail.com</p>
-                  <p class="card-text">Website : www.orphanage.in</p>
+                  <p class="card-text">Care Taker : Mr. <span id="caretaker"></span></p>
+                  <p class="card-text">No of Children : <span id="children"></span></p>
+                  <p class="card-text">Phone No.: <span id="phone_contact"></span></p>
+                  <p class="card-text">Email : <span id="email"></span></p>
+                  <!-- <p class="card-text">Website : www.orphanage.in</p> -->
                 </div>
               </div>
             </div>
@@ -180,5 +180,15 @@
     ></script>
     <!-- Custom JS -->
     <script src="{{url_for('static', filename='JS/home.js')}}"></script>
+    <script>
+      document.getElementById("name").innerHTML = '{{data[0].orphanage_name}}';
+      document.getElementById("phone").innerHTML = '{{data[0].phone_number}}';
+      document.getElementById("address").innerHTML = '{{data[0].address_line1}}, {{data[0].address_line2}}, {{data[0].area}}, {{data[0].city}} - {{data[0].pin_code}}';
+      document.getElementById("about").innerHTML = '{{data[0].about}}';
+      document.getElementById("caretaker").innerHTML = '{{data[0].caretaker_name}}';
+      document.getElementById("children").innerHTML = '{{data[0].no_of_children}}';
+      document.getElementById("phone_contact").innerHTML = '{{data[0].phone_number}}';
+      document.getElementById("email").innerHTML = '{{data[0].email_id}}';
+    </script>
   </body>
 </html>

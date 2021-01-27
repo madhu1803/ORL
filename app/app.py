@@ -52,9 +52,18 @@ def signup():
 def home():
     return render_template('DonorHome.html')
 
-@app.route('/orphanage/profile')
-def or_profile():
-    return render_template('OrphanageProfile.html')
+@app.route('/orphanage/profile/<id>')
+def or_profile(id):
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT * FROM orphanage_addresses INNER JOIN orphanage_users ON orphanage_addresses.or_user_id = orphanage_users.or_user_id WHERE orphanage_users.or_user_id = %s"
+    cursor.execute(query, (id,))
+    results = cursor.fetchall()
+    final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
+    print(final)
+    cursor.close()
+    connection.close()
+    return render_template('OrphanageProfile.html', data=final)
 
 @app.route('/getOrphanages')
 def getOrphanages():
@@ -71,41 +80,12 @@ def getOrphanages():
     # print(query)
     cursor.execute(query, (lat, lon,))
     results = cursor.fetchall()
-    final = []
-    dic = {}
+    final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
+    # print(json.dumps({'results': final}))
+    print("Final\n")
+    print(final)
     print("Results\n")
     print(results)
-    for i in results:
-        for j in range(0, len(i)):
-            if(j == 2):
-                dic.update({"Address_Line1": i[j]})
-            elif(j == 3):
-                dic.update({"Address_Line2": i[j]})
-            elif(j == 4):
-                if(i[j] != ''):
-                    dic.update({"Address_line3": i[j]})
-            elif(j == 5):
-                dic.update({"Area": i[j]})
-            elif(j == 6):
-                dic.update({"City": i[j]})
-            elif(j == 7):
-                dic.update({"PIN_Code": i[j]})
-            elif(j == 8):
-                dic.update({"Latitude": i[j]})
-            elif(j == 9):
-                dic.update({"Longitude": i[j]})
-            elif(j == 11):
-                dic.update({"Orphanage_Name": i[j]})
-            elif(j == 12):
-                dic.update({"Phone_Number": i[j]})
-            elif(j == 14):
-                dic.update({"Caretaker_Name": i[j]})
-            elif(j == 13):
-                dic.update({"Email": i[j]})
-            elif(j == 18):
-                dic.update({"Distance":i[j]})
-        final.append(dic)
-
     cursor.close()
     connection.close()
     return {"result":final}
