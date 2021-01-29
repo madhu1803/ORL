@@ -32,6 +32,13 @@ def orphanagelogin():
     print(path)
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    session.pop("user")
+    if "user" not in session:
+        print("Logged Out")
+    return redirect('/login')
+
 @app.route('/submitOrphanageLogin', methods=['POST'])
 def submitOrphanageLogin():
     email = request.form.get('email')
@@ -47,14 +54,21 @@ def submitOrphanageLogin():
     # print(json.dumps({'results': final}))
     print("Final\n")
     print(final)
-    cursor.close()
-    connection.close()
-    if(final[0]["email_id"] == email) and final[0]["password"] == password:
-        user = final[0]["or_user_id"]
-        session['user'] = user
-        return redirect(url_for('home'))
+    if cursor.rowcount != 0:
+        if(final[0]["email_id"] == email) and final[0]["password"] == password:
+            user = final[0]["or_user_id"]
+            session['user'] = user
+            cursor.close()
+            connection.close()
+            return redirect(url_for('home'))
+        else:
+            cursor.close()
+            connection.close()
+            return "Error"
     else:
-        return "Error"
+        cursor.close()
+        connection.close()
+        return "No Users found. Please login again"
 
 @app.route('/submitLogin', methods=['POST'])
 def submitLogin():
@@ -68,17 +82,23 @@ def submitLogin():
     print("Results")
     print(results)
     final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
-    # print(json.dumps({'results': final}))
     print("Final\n")
     print(final)
-    cursor.close()
-    connection.close()
-    if(final[0]["email_id"] == email) and final[0]["password"] == password:
-        user = final[0]["or_user_id"]
-        session['user'] = user
-        return redirect(url_for('home'))
+    if cursor.rowcount != 0:
+        if(final[0]["email_id"] == email) and final[0]["password"] == password:
+            user = final[0]["user_id"]
+            session['user'] = user
+            cursor.close()
+            connection.close()
+            return redirect(url_for('home'))
+        else:
+            cursor.close()
+            connection.close()
+            return "Error"
     else:
-        return "Error"
+        cursor.close()
+        connection.close()
+        return "No users found"
 
 @app.route('/signup')
 def signup():
@@ -143,11 +163,32 @@ def newRequirementsSubmit():
         user = session['user']
     if valid == '':
         query = "INSERT INTO requirements (or_user_id, item_name, quantity) VALUES(%s, %s, %s)"
-    cursor.execute(query, (user, item_name, quantity,))
-    cursor.close()
-    connection.close()
+        cursor.execute(query, (user, item_name, quantity,))
+        cursor.close()
+        connection.close()
+    else:
+        query = "INSERT INTO requirements (or_user_id, item_name, quantity, valid_till) VALUES(%s, %s, %s, %s)"
+        cursor.execute(query, (user, item_name, quantity, valid,))
+        cursor.close()
+        connection.close()
     flash("New Requirement Added Successfully", category="success")
     return render_template('newRequirement.html')
+
+@app.route('/orphanage/dashboard/requirements/view')
+def viewRequirements():
+    if "user" in session:
+        user = session['user']
+        connection = mysql.connector.connect(**config)
+        cursor = connection.cursor()
+        query = "SELECT * FROM requirements WHERE or_user_id = %s"
+        cursor.execute(query, (user,))
+        results = cursor.fetchall()
+        final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
+        cursor.close()
+        connection.close()
+        return render_template('requirementsList.html', data=final)
+    else:
+        return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, ssl_context='adhoc')
