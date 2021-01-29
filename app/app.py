@@ -90,5 +90,9 @@ def getOrphanages():
     connection.close()
     return {"result":final}
 
+@app.route('/orphanage/dashboard/requirements/new')
+def newRequirements():
+    return render_template('newRequirement.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, ssl_context='adhoc')

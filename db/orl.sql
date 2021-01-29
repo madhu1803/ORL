@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jan 24, 2021 at 01:45 PM
+-- Generation Time: Jan 29, 2021 at 06:04 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.4.14
 
@@ -64,7 +64,8 @@ CREATE TABLE `orphanage_addresses` (
 --
 
 INSERT INTO `orphanage_addresses` (`id`, `or_user_id`, `address_line1`, `address_line2`, `address_line3`, `area`, `city`, `pin_code`, `latitude`, `longitude`) VALUES
-(1, 1, '187, Kuttiappan 2nd Street', 'Medavakkam Tank Road', '', 'Kilpauk', 'Chennai', 600010, 13.087409019470215, 80.241477966308600);
+(1, 1, '187, Kuttiappan 2nd Street', 'Medavakkam Tank Road', '', 'Kilpauk', 'Chennai', 600010, 13.087409019470215, 80.241477966308600),
+(2, 2, 'Newel Paradise', 'Dhanapal Street', '', 'West Mambalam', 'Chennai', 600033, 13.029458045959473, 80.220985412597660);
 
 -- --------------------------------------------------------
 
@@ -88,7 +89,37 @@ CREATE TABLE `orphanage_users` (
 --
 
 INSERT INTO `orphanage_users` (`or_user_id`, `orphanage_name`, `phone_number`, `email_id`, `caretaker_name`, `no_of_children`, `about`, `password`) VALUES
-(1, 'Karunai Illam', 9791201860, 'sarvesh4232@gmail.com', 'Sarvesh', 10, 'Love to care. Care to love.', 'sarsterror');
+(1, 'Karunai Illam', 9791201860, 'sarvesh4232@gmail.com', 'Sarvesh', 10, 'Love to care. Care to love.', 'sarsterror'),
+(2, 'Mini Vilas', 7358265069, 'madhumithaa1411@gmail.com', 'Madhumithaa', 20, 'Love ', 'mini');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requirements`
+--
+
+CREATE TABLE `requirements` (
+  `id` int(11) NOT NULL,
+  `item_name` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `valid_till` date NOT NULL,
+  `or_user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `or_used_id` int(11) NOT NULL,
+  `item_name` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -104,6 +135,13 @@ CREATE TABLE `users` (
   `email_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `phone_number`, `email_id`, `password`) VALUES
+(1, 'sarvesh', 's', 9791201860, 'sarvesh4232@gmail.com', 'sarsterror');
 
 --
 -- Indexes for dumped tables
@@ -130,6 +168,21 @@ ALTER TABLE `orphanage_users`
   ADD PRIMARY KEY (`or_user_id`);
 
 --
+-- Indexes for table `requirements`
+--
+ALTER TABLE `requirements`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `or_user_id` (`or_user_id`);
+
+--
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `or_used_id` (`or_used_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -149,19 +202,31 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT for table `orphanage_addresses`
 --
 ALTER TABLE `orphanage_addresses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orphanage_users`
 --
 ALTER TABLE `orphanage_users`
-  MODIFY `or_user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `or_user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `requirements`
+--
+ALTER TABLE `requirements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -178,6 +243,19 @@ ALTER TABLE `addresses`
 --
 ALTER TABLE `orphanage_addresses`
   ADD CONSTRAINT `or_user_id_fk` FOREIGN KEY (`or_user_id`) REFERENCES `orphanage_users` (`or_user_id`);
+
+--
+-- Constraints for table `requirements`
+--
+ALTER TABLE `requirements`
+  ADD CONSTRAINT `requirements_ibfk_1` FOREIGN KEY (`or_user_id`) REFERENCES `orphanage_users` (`or_user_id`);
+
+--
+-- Constraints for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`or_used_id`) REFERENCES `orphanage_users` (`or_user_id`),
+  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
