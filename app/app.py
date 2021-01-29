@@ -12,14 +12,9 @@ config = {
     'password': 'root',
     'host': 'db',
     'port': '3306',
-    'database': 'orl'
+    'database': 'orl',
+    'autocommit': True
 }
-# connection = mysql.connector.connect(**config)
-# cursor = connection.cursor()
-# cursor.execute('SELECT * FROM favorite_colors')
-# results = [{name: color} for (name, color) in cursor]
-# cursor.close()
-# connection.close()
 
 @app.route('/login')
 def login():
@@ -51,9 +46,6 @@ def submitOrphanageLogin():
     print("Results")
     print(results)
     final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
-    # print(json.dumps({'results': final}))
-    print("Final\n")
-    print(final)
     if cursor.rowcount != 0:
         if(final[0]["email_id"] == email) and final[0]["password"] == password:
             user = final[0]["or_user_id"]
@@ -115,11 +107,14 @@ def or_profile(id):
     query = "SELECT * FROM orphanage_addresses INNER JOIN orphanage_users ON orphanage_addresses.or_user_id = orphanage_users.or_user_id WHERE orphanage_users.or_user_id = %s"
     cursor.execute(query, (id,))
     results = cursor.fetchall()
-    final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
-    print(final)
+    final1 = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
+    query = "SELECT * FROM requirements WHERE or_user_id = %s"
+    cursor.execute(query, (id,))
+    results = cursor.fetchall()
+    final2 = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
     cursor.close()
     connection.close()
-    return render_template('OrphanageProfile.html', data=final)
+    return render_template('OrphanageProfile.html', data=final1, data2=final2)
 
 @app.route('/getOrphanages')
 def getOrphanages():
@@ -132,16 +127,9 @@ def getOrphanages():
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
     query = "SELECT *, SQRT(POW(69.1 * (latitude - %s), 2) + POW(69.1 * (%s - longitude) * COS(latitude / 57.3), 2)) AS distance FROM orphanage_addresses INNER JOIN orphanage_users ON orphanage_addresses.or_user_id = orphanage_users.or_user_id HAVING distance < 25 ORDER BY distance;"
-    # print("Query\n")
-    # print(query)
     cursor.execute(query, (lat, lon,))
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
-    # print(json.dumps({'results': final}))
-    print("Final\n")
-    print(final)
-    print("Results\n")
-    print(results)
     cursor.close()
     connection.close()
     return {"result":final}
@@ -161,18 +149,20 @@ def newRequirementsSubmit():
     cursor = connection.cursor()
     if "user" in session:
         user = session['user']
-    if valid == '':
-        query = "INSERT INTO requirements (or_user_id, item_name, quantity) VALUES(%s, %s, %s)"
-        cursor.execute(query, (user, item_name, quantity,))
-        cursor.close()
-        connection.close()
+        if valid == '':
+            query = "INSERT INTO requirements (or_user_id, item_name, quantity) VALUES(%s, %s, %s)"
+            cursor.execute(query, (user, item_name, quantity,))
+            cursor.close()
+            connection.close()
+        else:
+            query = "INSERT INTO requirements (or_user_id, item_name, quantity, valid_till) VALUES(%s, %s, %s, %s)"
+            cursor.execute(query, (user, item_name, quantity, valid,))
+            cursor.close()
+            connection.close()
+        flash("New Requirement Added Successfully", category="success")
+        return render_template('newRequirement.html')
     else:
-        query = "INSERT INTO requirements (or_user_id, item_name, quantity, valid_till) VALUES(%s, %s, %s, %s)"
-        cursor.execute(query, (user, item_name, quantity, valid,))
-        cursor.close()
-        connection.close()
-    flash("New Requirement Added Successfully", category="success")
-    return render_template('newRequirement.html')
+        return redirect('/orphanage/login')
 
 @app.route('/orphanage/dashboard/requirements/view')
 def viewRequirements():

@@ -142,27 +142,20 @@
         <div class="container requirements-list-container">
           <div class="row">
             <h4 class="ml-3 mb-3">Requirements List</h4>
-            <div class="col-sm-12">
-              <div class="card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                  <h5 class="card-title">Clothes</h5>
-                  <p class="card-text">asasasasaas</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+            {% for data in data2 %}
+              <div class="col-sm-12">
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                  <div class="card-body">
+                    <h5 class="card-title">{{data["item_name"]}}</h5>
+                    <p class="card-text">Required: {{data["quantity"]}}</p>
+                    {% if data["valid_till"] is not none %}
+                      <p class="card-text">Request Valid Till: {{data["valid_till"]}}</p>
+                    {% endif %}
+                    <a href="#" class="btn btn-primary">Donate Now</a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-12">
-              <div class="card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                  <h5 class="card-title">Stationaries</h5>
-                  <p class="card-text">
-                    With supporting text below as a natural lead-in to
-                    additional content.
-                  </p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
       </div>
