@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from datetime import timedelta
 import mysql.connector
 import json
 
 app = Flask(__name__)
+app.secret_key = "hello"
+app.permanent_session_lifetime = timedelta(minutes=60)
 
 config = {
     'user': 'root',
@@ -22,6 +25,37 @@ config = {
 def login():
     return render_template('login.html')
 
+@app.route('/orphanage/login')
+def orphanagelogin():
+    path = request.path
+    flash(path)
+    print(path)
+    return render_template('login.html')
+
+@app.route('/submitOrphanageLogin', methods=['POST'])
+def submitOrphanageLogin():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT * FROM orphanage_users WHERE email_id = %s"
+    cursor.execute(query, (email,))
+    results = cursor.fetchall()
+    print("Results")
+    print(results)
+    final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
+    # print(json.dumps({'results': final}))
+    print("Final\n")
+    print(final)
+    cursor.close()
+    connection.close()
+    if(final[0]["email_id"] == email) and final[0]["password"] == password:
+        user = final[0]["or_user_id"]
+        session['user'] = user
+        return redirect(url_for('home'))
+    else:
+        return "Error"
+
 @app.route('/submitLogin', methods=['POST'])
 def submitLogin():
     email = request.form.get('email')
@@ -40,6 +74,8 @@ def submitLogin():
     cursor.close()
     connection.close()
     if(final[0]["email_id"] == email) and final[0]["password"] == password:
+        user = final[0]["or_user_id"]
+        session['user'] = user
         return redirect(url_for('home'))
     else:
         return "Error"
@@ -90,8 +126,27 @@ def getOrphanages():
     connection.close()
     return {"result":final}
 
-@app.route('/orphanage/dashboard/requirements/new')
+@app.route('/orphanage/dashboard/requirements/new', methods=['GET'])
 def newRequirements():
+    return render_template('newRequirement.html')
+
+@app.route('/orphanage/dashboard/requirements/new/submit', methods=['POST'])
+def newRequirementsSubmit():
+    item_name = request.form.get('item_name')
+    quantity = request.form.get('quantity')
+    valid = request.form.get('valid')
+    print("Valid")
+    print(valid)
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    if "user" in session:
+        user = session['user']
+    if valid == '':
+        query = "INSERT INTO requirements (or_user_id, item_name, quantity) VALUES(%s, %s, %s)"
+    cursor.execute(query, (user, item_name, quantity,))
+    cursor.close()
+    connection.close()
+    flash("New Requirement Added Successfully", category="success")
     return render_template('newRequirement.html')
 
 if __name__ == '__main__':

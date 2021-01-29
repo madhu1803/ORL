@@ -66,14 +66,22 @@
       </nav>
       <!-- Main Body -->
       <div class="main-container container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for msg in messages %}
+              <h5>{{msg}}</h5>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
         <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
           <div class="card-body">
             <h5 class="card-title">New Requirement List</h5>
-            <form>
+            <form method="POST" action="{{url_for('newRequirementsSubmit')}}">
               <div class="form-group">
                 <input
                   type="text"
                   class="form-control"
+                  name="item_name"
                   id="item_name"
                   placeholder="Item name"
                   required
@@ -83,6 +91,8 @@
                 <input
                   type="number"
                   class="form-control"
+                  name="quantity"
+                  min="1"
                   id="required_quantity"
                   placeholder="Required Quantity"
                   required
@@ -93,6 +103,7 @@
                 <input
                   type="date"
                   class="form-control"
+                  name="valid"
                   id="expiry_Date"
                   placeholder="expiry_Date"
                 />

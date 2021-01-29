@@ -39,4 +39,6 @@ Temporary Items
 !.vscode/extensions.json
 *.code-workspace
 
+### docker DB ###
+db/mysql/*
 # End of https://www.toptal.com/developers/gitignore/api/macos,vscode

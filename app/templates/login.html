@@ -34,6 +34,61 @@
           <div class="main-container">
             <div class="field-container">
               <h3 class="txt-blue">Login</h3>
+              {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                  {% for msg in messages %}
+                    {% if msg == '/orphanage/login' %}
+                      <form action="{{url_for('submitOrphanageLogin')}}" method="POST">
+                        <div class="form-group">
+                          <label for="email">Email address</label>
+                          <input
+                            type="email"
+                            class="form-control mt-3"
+                            id="email"
+                            name="email"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Password</label>
+                          <input
+                            type="password mt-3"
+                            class="form-control"
+                            id="password1"
+                            name="password"
+                          />
+                        </div>
+                        <button type="submit" class="btn btn-block bg-blue mt-3">
+                          Login
+                        </button>
+                      </form>
+                    {% else %}
+                      <form action="{{url_for('submitLogin')}}" method="POST">
+                        <div class="form-group">
+                          <label for="email">Email address</label>
+                          <input
+                            type="email"
+                            class="form-control mt-3"
+                            id="email"
+                            name="email"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Password</label>
+                          <input
+                            type="password mt-3"
+                            class="form-control"
+                            id="password1"
+                            name="password"
+                          />
+                        </div>
+                        <button type="submit" class="btn btn-block bg-blue mt-3">
+                          Login
+                        </button>
+                      </form>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
               <form action="{{url_for('submitLogin')}}" method="POST">
                 <div class="form-group">
                   <label for="email">Email address</label>
