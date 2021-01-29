@@ -18,7 +18,7 @@
                             '<p class="card-text">' +
                               item.about +
                             '</p>' +
-                            '<a href="orphanageProfile.html" class="btn btn-primary"' +
+                            '<a href="/orphanage/profile/' + item.or_user_id + '" class="btn btn-primary"' +
                             '>View More Details</a' +
                             '>' +
                           '</div>' +
