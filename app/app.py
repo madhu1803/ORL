@@ -134,6 +134,10 @@ def getOrphanages():
     connection.close()
     return {"result":final}
 
+@app.route('/orphanage/')
+def dashboard():
+    return render_template('dashboardHome.html')
+
 @app.route('/orphanage/dashboard/requirements/new', methods=['GET'])
 def newRequirements():
     return render_template('newRequirement.html')

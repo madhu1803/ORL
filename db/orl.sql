@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jan 29, 2021 at 06:04 AM
+-- Generation Time: Jan 31, 2021 at 12:14 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.4.14
 
@@ -102,9 +102,16 @@ CREATE TABLE `requirements` (
   `id` int(11) NOT NULL,
   `item_name` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `valid_till` date NOT NULL,
+  `valid_till` date DEFAULT NULL,
   `or_user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `requirements`
+--
+
+INSERT INTO `requirements` (`id`, `item_name`, `quantity`, `valid_till`, `or_user_id`) VALUES
+(3, 'Rice', 10, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -214,7 +221,7 @@ ALTER TABLE `orphanage_users`
 -- AUTO_INCREMENT for table `requirements`
 --
 ALTER TABLE `requirements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transactions`
