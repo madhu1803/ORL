@@ -62,12 +62,12 @@
                 Requirements
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Add New Requirement</a>
-                <a class="dropdown-item" href="#"
+                <a class="dropdown-item" href="{{url_for('newRequirements')}}">Add New Requirement</a>
+                <a class="dropdown-item" href="{{url_for('viewRequirements')}}"
                   >View Exisiting Requirement
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Requirement History</a>
+                <a class="dropdown-item" href="{{url_for('viewRequirements')}}">Requirement History</a>
               </div>
             </li>
             <li class="nav-item">

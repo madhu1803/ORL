@@ -65,15 +65,17 @@
                   <th scope="col">Item name</th>
                   <th scope="col">Required Quantity</th>
                   <th scope="col">Expiry date</th>
+                  <th scope="col">Timestamp</th>
                 </tr>
               </thead>
               <tbody>
                 {% for i in range(0, data|length) %}
                   <tr>
-                    <th scope="row">{{i}}</th>
+                    <th scope="row">{{i+1}}</th>
                     <td>{{data[i].item_name}}</td>
                     <td>{{data[i].quantity}}</td>
                     <td>{{data[i].valid_till}}</td>
+                    <td>{{data[i].timestamp}}</td>
                   </tr>
                 {% endfor %}
                 <!-- <tr>

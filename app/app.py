@@ -15,7 +15,11 @@ config = {
     'database': 'orl',
     'autocommit': True
 }
-
+connection = mysql.connector.connect(**config)
+def createConnection():
+    cursor = connection.cursor()
+    return cursor
+    
 @app.route('/login')
 def login():
     return render_template('login.html')
@@ -38,8 +42,7 @@ def logout():
 def submitOrphanageLogin():
     email = request.form.get('email')
     password = request.form.get('password')
-    connection = mysql.connector.connect(**config)
-    cursor = connection.cursor()
+    cursor = createConnection()
     query = "SELECT * FROM orphanage_users WHERE email_id = %s"
     cursor.execute(query, (email,))
     results = cursor.fetchall()
@@ -62,12 +65,42 @@ def submitOrphanageLogin():
         connection.close()
         return "No Users found. Please login again"
 
+@app.route('/submitSignup', methods=['POST'])
+def submitSignup():
+    fname = request.form.get('first_name')
+    lname = request.form.get('last_name')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    mobile = request.form.get('mobile')
+    confirm_password = request.form.get('confirm_password')
+    if(password == confirm_password):
+        cursor = createConnection()
+        query = "SELECT * FROM orphanage_users WHERE email_id = %s"
+        cursor.execute(query, (email,))
+        results = cursor.fetchall()
+        print("Results")
+        print(results)
+        final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
+        print("Final")
+        print(final)
+        for data in final:
+            if(data["email"] == email):
+                cursor.close()
+                connection.close()
+                return "Email Already Exists. Please use a different email."
+            else:
+                query = "INSERET INTO users (first_name, last_name, phone_number, email_id, password) VALUES (%s, %s, %s, %s, %s)"
+                cursor.execute(query,(fname, lname, mobile, email, password,))
+                cursor.close()
+                connection.close()
+        return "Success"
+
+
 @app.route('/submitLogin', methods=['POST'])
 def submitLogin():
     email = request.form.get('email')
     password = request.form.get('password')
-    connection = mysql.connector.connect(**config)
-    cursor = connection.cursor()
+    cursor = createConnection()
     query = "SELECT * FROM users WHERE email_id = %s"
     cursor.execute(query, (email,))
     results = cursor.fetchall()
@@ -102,8 +135,7 @@ def home():
 
 @app.route('/orphanage/profile/<id>')
 def or_profile(id):
-    connection = mysql.connector.connect(**config)
-    cursor = connection.cursor()
+    cursor = createConnection()
     query = "SELECT * FROM orphanage_addresses INNER JOIN orphanage_users ON orphanage_addresses.or_user_id = orphanage_users.or_user_id WHERE orphanage_users.or_user_id = %s"
     cursor.execute(query, (id,))
     results = cursor.fetchall()
@@ -124,8 +156,7 @@ def getOrphanages():
     print(type(lat))
     print("lon: ")
     print(type(lon))
-    connection = mysql.connector.connect(**config)
-    cursor = connection.cursor()
+    cursor = createConnection()
     query = "SELECT *, SQRT(POW(69.1 * (latitude - %s), 2) + POW(69.1 * (%s - longitude) * COS(latitude / 57.3), 2)) AS distance FROM orphanage_addresses INNER JOIN orphanage_users ON orphanage_addresses.or_user_id = orphanage_users.or_user_id HAVING distance < 25 ORDER BY distance;"
     cursor.execute(query, (lat, lon,))
     results = cursor.fetchall()
@@ -149,8 +180,7 @@ def newRequirementsSubmit():
     valid = request.form.get('valid')
     print("Valid")
     print(valid)
-    connection = mysql.connector.connect(**config)
-    cursor = connection.cursor()
+    cursor = createConnection()
     if "user" in session:
         user = session['user']
         if valid == '':
@@ -172,8 +202,7 @@ def newRequirementsSubmit():
 def viewRequirements():
     if "user" in session:
         user = session['user']
-        connection = mysql.connector.connect(**config)
-        cursor = connection.cursor()
+        cursor = createConnection()
         query = "SELECT * FROM requirements WHERE or_user_id = %s"
         cursor.execute(query, (user,))
         results = cursor.fetchall()
@@ -182,7 +211,7 @@ def viewRequirements():
         connection.close()
         return render_template('requirementsList.html', data=final)
     else:
-        return render_template('login.html')
+        return redirect('/orphanage/login')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, ssl_context='adhoc')
