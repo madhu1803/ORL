@@ -133,6 +133,32 @@ def signup():
 def home():
     return render_template('DonorHome.html')
 
+@app.route('/orders/history')
+def orderHistory():
+    if "user" in session:
+        user = session['user']
+        cursor = createConnection()
+        query = "SELECT * FROM transactions WHERE user_id = %s"
+        cursor.execute(query,(user,))
+        results = cursor.fetchall()
+        final1 = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
+        print("FINAL 1")
+        print(final1)
+        final2 = []
+        query = "SELECT orphanage_name FROM orphanage_users WHERE or_user_id = %s"
+        for item in final1:
+            cursor.execute(query,(item["or_user_id"],))
+            results = cursor.fetchall()
+            final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
+            print("FINAL")
+            print(final)
+            final2.append(final[0])
+        print("FINAL 2")
+        print(final2)
+        return render_template('donorOrderHistory.html', data=final1, data2 = final2)
+    else:
+        return redirect('/login')
+
 @app.route('/orphanage/profile/<id>')
 def or_profile(id):
     cursor = createConnection()
