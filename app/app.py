@@ -54,11 +54,11 @@ def submitOrphanageLogin():
             user = final[0]["or_user_id"]
             session['user'] = user
             cursor.close()
-            connection.close()
-            return redirect(url_for('home'))
+            # connection.close()
+            return redirect(url_for('dasboard'))
         else:
             cursor.close()
-            connection.close()
+            # connection.close()
             return "Error"
     else:
         cursor.close()
