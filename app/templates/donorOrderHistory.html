@@ -16,7 +16,10 @@
       crossorigin="anonymous"
     />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{url_for('static', filename='CSS/home.css')}}" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='CSS/home.css')}}"
+    />
     <title>Donor Order History</title>
   </head>
 
@@ -27,8 +30,8 @@
       <nav
         class="navbar navbar-expand-lg navbar-light bg-dblue shadow p-3 mb-5 bg-white rounded"
       >
-      <a class="navbar-brand" href="{{url_for('home')}}">ORL</a>
-      <button
+        <a class="navbar-brand" href="{{url_for('home')}}">ORL</a>
+        <button
           class="navbar-toggler"
           type="button"
           data-toggle="collapse"
@@ -75,7 +78,11 @@
             <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
               Search
             </button>
-            <a href="{{url_for('logout')}}" class="btn btn-primary my-2 my-sm-0 ml-2">Logout</a>
+            <a
+              href="{{url_for('logout')}}"
+              class="btn btn-primary my-2 my-sm-0 ml-2"
+              >Logout</a
+            >
           </form>
         </div>
       </nav>
@@ -85,18 +92,29 @@
         <div class="container requirements-list-container">
           <div class="row">
             <h4 class="ml-3 mb-3">Order History</h4>
-            {% for i in range(0, data|length) %}
-              <div class="col-sm-12">
-                <div class="card shadow p-3 mb-5 bg-white rounded">
-                  <div class="card-body">
-                    <h5 class="card-title">{{data2[i]["orphanage_name"]}}</h5>
-                    <p class="card-text">Order ID: {{data[i]["id"]}}</p>
-                    <p class="card-text">Item name: {{data[i]["item_name"]}}</p>
-                    <p class="card-text">Quantity: {{data[i]["quantity"]}}</p>
-                    <p class="card-text">Timestamp: {{data[i]["timestamp"]}}</p>
-                  </div>
+            <div class="col-sm-12">
+              <div class="card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                  <h5 class="card-title">{{data2[i]["orphanage_name"]}}</h5>
+                  <p class="card-text">Order ID: {{data[i]["id"]}}</p>
+                  <p class="card-text">Item name: {{data[i]["item_name"]}}</p>
+                  <p class="card-text">Quantity: {{data[i]["quantity"]}}</p>
+                  <p class="card-text">Timestamp: {{data[i]["timestamp"]}}</p>
                 </div>
               </div>
+            </div>
+            {% for i in range(0, data|length) %}
+            <div class="col-sm-12">
+              <div class="card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                  <h5 class="card-title">{{data2[i]["orphanage_name"]}}</h5>
+                  <p class="card-text">Order ID: {{data[i]["id"]}}</p>
+                  <p class="card-text">Item name: {{data[i]["item_name"]}}</p>
+                  <p class="card-text">Quantity: {{data[i]["quantity"]}}</p>
+                  <p class="card-text">Timestamp: {{data[i]["timestamp"]}}</p>
+                </div>
+              </div>
+            </div>
             {% endfor %}
             <!-- <div class="col-sm-12">
               <div class="card shadow p-3 mb-5 bg-white rounded">
