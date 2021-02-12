@@ -178,10 +178,76 @@
           <div class="container">
             <h3 class="display-4">Make a donation instantly!</h3>
             <hr class="my-4" />
-            <a class="btn bg-grey btn-lg" href="#" role="button">Donate Now</a>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#donate-modal"
+            >
+              Donate Now
+            </button>
           </div>
         </div>
         <!--End-->
+      </div>
+    </div>
+    <!-- Donate Now  Modal -->
+    <div
+      class="modal fade"
+      id="donate-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h1>Do you wish to make the donation now?</h1>
+            <form action="" method="POST">
+              <div class="form-group">
+                <label for="item_name">Name of Item</label>
+                <input
+                  type="text"
+                  class="form-control mt-3"
+                  id="item_name"
+                  name="item_name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="quantity">Required Qauntity: 25</label>
+                <p></p>
+                <label for="quantity">Quantity to be donated</label>
+                <input
+                  type="number"
+                  class="form-control mt-3"
+                  id="quantity"
+                  name="quantity"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn bg-blue">Donate</button>
+          </div>
+        </div>
       </div>
     </div>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
