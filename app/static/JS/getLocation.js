@@ -15,7 +15,7 @@ function populateCards(data) {
       'alt="..."' +
       "/>" +
       '<div class="card-body">' +
-      '<h5 class="card-title">' +
+      '<h5 class="card-title text-success">' +
       item.orphanage_name +
       "</h5>" +
       '<p class="card-text">' +
