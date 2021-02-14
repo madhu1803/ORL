@@ -5,6 +5,7 @@ body {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
+  font-family: "Montserrat", sans-serif;
 }
 /* general styling */
 .txt-dblue {
@@ -65,7 +66,10 @@ input::placeholder {
 }
 
 .login-container .login-left-container {
-  background-color: #3e5eab;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+    url("https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .login-container .login-left-container .left-text {
