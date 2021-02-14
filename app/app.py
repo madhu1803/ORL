@@ -23,9 +23,25 @@ config = {
 #     return cursor
 
 
+# admin modules
+@app.route('/admin/dashboard/approved-orphanages')
+def approvedorphanages():
+    return render_template('Admindashboard-approved.html')
+
+
+@app.route('/admin/dashboard/pending-orphanages')
+def pendingorphanages():
+    return render_template('Admindashboard-pending.html')
+
+
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+
+@app.route('/orphanage/register')
+def orphanageregister():
+    return render_template('Orphanagesignup.html')
 
 
 @app.route('/orphanage/login')
