@@ -36,6 +36,7 @@
       <!-- Navbar -->
       <nav
         class="navbar navbar-expand-lg navbar-light bg-black shadow p-3 mb-5 bg-white rounded"
+        style="margin-bottom: 10px !important"
       >
         <a class="navbar-brand" href="{{url_for('home')}}">ORL</a>
         <button
@@ -116,44 +117,32 @@
         </div>
         <!-- about -->
         <div class="container about-container">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                  <h5 class="card-title">About</h5>
-                  <p class="card-text" id="about">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. It has survived not only five centuries,
-                    but also the leap into electronic typesetting, remaining
-                    essentially unchanged. It was popularised in the 1960s with
-                    the release of Letraset sheets containing Lorem Ipsum
-                    passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum.
-                  </p>
-                  <!-- <a href="#" class="btn btn-success">Go somewhere</a> -->
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                  <h5 class="card-title">Details</h5>
-                  <p class="card-text">
-                    Care Taker : Mr. <span id="caretaker"></span>
-                  </p>
-                  <p class="card-text">
-                    No of Children : <span id="children"></span>
-                  </p>
-                  <p class="card-text">
-                    Phone No.: <span id="phone_contact"></span>
-                  </p>
-                  <p class="card-text">Email : <span id="email"></span></p>
-                  <!-- <p class="card-text">Website : www.orphanage.in</p> -->
-                </div>
-              </div>
+          <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
+            <div class="card-body">
+              <h5 class="card-title text-success">About</h5>
+              <p class="card-text" id="about">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+              </p>
+              <p class="card-text">
+                Care Taker : Mr. <span id="caretaker"></span>
+              </p>
+              <p class="card-text">
+                No of Children : <span id="children"></span>
+              </p>
+              <p class="card-text">
+                Phone No.: <span id="phone_contact"></span>
+              </p>
+              <p class="card-text">Email : <span id="email"></span></p>
+              <!-- <a href="#" class="btn btn-success">Go somewhere</a> -->
             </div>
           </div>
         </div>
