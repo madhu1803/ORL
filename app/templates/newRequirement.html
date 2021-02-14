@@ -90,7 +90,7 @@
         {% endfor %} {% endif %} {% endwith %}
         <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
           <div class="card-body">
-            <h5 class="card-title">New Requirement List</h5>
+            <h5 class="card-title text-success">New Requirement List</h5>
             <form method="POST" action="{{url_for('newRequirementsSubmit')}}">
               <div class="form-group">
                 <input
@@ -123,7 +123,9 @@
                   placeholder="expiry_Date"
                 />
               </div>
-              <button type="submit" class="btn bg-blue">Submit</button>
+              <button type="submit" class="btn btn-success btn-block">
+                Submit
+              </button>
             </form>
           </div>
         </div>
