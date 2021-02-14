@@ -38,10 +38,17 @@ def pendingorphanages():
 def login():
     return render_template('login.html')
 
+# orphanage modules
+
 
 @app.route('/orphanage/register')
 def orphanageregister():
     return render_template('Orphanagesignup.html')
+
+
+@app.route('/orphanage/manage-profile')
+def orphanagemanageprofile():
+    return render_template('Orphanage-Manageprofile.html')
 
 
 @app.route('/orphanage/login')
