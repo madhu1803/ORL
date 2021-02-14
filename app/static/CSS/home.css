@@ -8,19 +8,6 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 /* general styling */
-.txt-dblue {
-  color: #3e5eab !important;
-}
-.txt-blue {
-  color: #5580e9 !important;
-}
-.txt-grey {
-  color: #c1c8e4 !important;
-}
-
-.bg-grey {
-  background-color: #c1c8e4 !important;
-}
 
 .bg-black {
   background-color: #10171f !important;
@@ -34,7 +21,7 @@ body {
 
 /* navbar */
 .navbar a {
-  color: white !important;
+  color: #5cb85c !important;
 }
 
 /* input component */

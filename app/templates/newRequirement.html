@@ -7,7 +7,13 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
+    <!-- Google font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <!-- font awesome -->
+    <link rel="stylesheet" href="../static/CSS/fontawesome.css" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -16,14 +22,17 @@
       crossorigin="anonymous"
     />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{url_for('static',filename = 'CSS/home.css')}}" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename = 'CSS/home.css')}}"
+    />
     <title>ORL</title>
   </head>
   <body>
     <div class="new-requirement-container">
       <!-- Navbar -->
       <nav
-        class="navbar navbar-expand-lg navbar-light bg-dblue shadow p-3 mb-5 bg-white rounded"
+        class="navbar navbar-expand-lg bg-black shadow p-3 mb-5 bg-white rounded"
       >
         <a class="navbar-brand" href="{{url_for('dashboard')}}">ORL</a>
         <button
@@ -65,9 +74,6 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="requirementsList.html">History</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="#">Manage Profile</a>
             </li>
             <li class="nav-item">
@@ -78,13 +84,10 @@
       </nav>
       <!-- Main Body -->
       <div class="main-container container">
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            {% for msg in messages %}
-              <h5>{{msg}}</h5>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for
+        msg in messages %}
+        <h5>{{msg}}</h5>
+        {% endfor %} {% endif %} {% endwith %}
         <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
           <div class="card-body">
             <h5 class="card-title">New Requirement List</h5>
