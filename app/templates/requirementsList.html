@@ -7,7 +7,13 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
+    <!-- Google font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <!-- font awesome -->
+    <link rel="stylesheet" href="../static/CSS/fontawesome.css" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -16,14 +22,17 @@
       crossorigin="anonymous"
     />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{url_for('static',filename = 'CSS/home.css')}}" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename = 'CSS/home.css')}}"
+    />
     <title>ORL</title>
   </head>
   <body>
     <div class="requirement-list-container">
       <!-- Navbar -->
       <nav
-        class="navbar navbar-expand-lg navbar-light bg-dblue shadow p-3 mb-5 bg-white rounded"
+        class="navbar navbar-expand-lg bg-black shadow p-3 mb-5 bg-white rounded"
       >
         <a class="navbar-brand" href="{{url_for('dashboard')}}">ORL</a>
         <button
@@ -65,10 +74,9 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="requirementsList.html">History</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Manage Profile</a>
+              <a class="nav-link" href="{{url_for('orphanagemanageprofile')}}"
+                >Manage Profile</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{url_for('logout')}}">Sign Out</a>
@@ -80,7 +88,7 @@
       <div class="main-container container">
         <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
           <div class="card-body">
-            <h5 class="card-title">Requirements List</h5>
+            <h5 class="card-title text-success">Requirements List</h5>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -93,13 +101,13 @@
               </thead>
               <tbody>
                 {% for i in range(0, data|length) %}
-                  <tr>
-                    <th scope="row">{{i+1}}</th>
-                    <td>{{data[i].item_name}}</td>
-                    <td>{{data[i].quantity}}</td>
-                    <td>{{data[i].valid_till}}</td>
-                    <td>{{data[i].timestamp}}</td>
-                  </tr>
+                <tr>
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{data[i].item_name}}</td>
+                  <td>{{data[i].quantity}}</td>
+                  <td>{{data[i].valid_till}}</td>
+                  <td>{{data[i].timestamp}}</td>
+                </tr>
                 {% endfor %}
                 <!-- <tr>
                   <th scope="row">1</th>

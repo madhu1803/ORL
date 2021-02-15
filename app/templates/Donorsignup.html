@@ -7,6 +7,13 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <!-- Google font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <!-- font awesome -->
+    <link rel="stylesheet" href="../static/CSS/fontawesome.css" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -15,7 +22,10 @@
       crossorigin="anonymous"
     />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{url_for('static',filename = 'CSS/home.css')}}" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename = 'CSS/home.css')}}"
+    />
     <title>Signup</title>
   </head>
   <body>
@@ -26,60 +36,72 @@
         <div class="login-left-container col-lg-6 d-none d-lg-block">
           <h2 class="text-white left-text">Orphanage Resource Locator</h2>
           <div style="text-align: center" class="left-container-links">
-            <a href="{{url_for('login')}}" class="text-white text-center">Login</a>
+            <a href="{{url_for('login')}}" class="text-success text-center"
+              >Login</a
+            >
           </div>
         </div>
         <!-- Right Container -->
         <div class="login-right-container col-lg-6">
           <div class="main-container">
             <div class="field-container">
-              <h3 class="txt-blue">Sign Up</h3>
+              <h3 class="text-success">Sign Up</h3>
               <form method="POST" action="{{url_for('submitSignup')}}">
                 <div class="form-group">
-                  <label for="fname">First Name</label>
                   <input
                     type="text"
                     name="first_name"
                     class="form-control mt-3"
                     id="fname"
+                    placeholder="First Name"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="lname">Last Name</label>
                   <input
                     type="text"
                     name="last_name"
                     class="form-control mt-3"
                     id="lname"
+                    placeholder="Last Name"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="email">Email address</label>
                   <input
                     type="email"
                     name="email"
                     class="form-control mt-3"
                     id="email"
+                    placeholder="Email Address"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="mobile_number">Mobile Number</label>
                   <input
                     type="number"
                     name="mobile"
                     class="form-control mt-3"
                     id="mobile_number"
+                    placeholder="Mobile Number"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="psd_1">Create Password</label>
-                  <input type="password" class="form-control mt-3" id="psd_1" name="password" />
+                  <input
+                    type="password"
+                    class="form-control mt-3"
+                    id="psd_1"
+                    name="password"
+                    placeholder="New Password"
+                  />
                 </div>
                 <div class="form-group">
-                  <label for="psd_2">Confirm Password</label>
-                  <input type="password" class="form-control mt-3" id="psd_2" name="confirm_password" />
+                  <input
+                    type="password"
+                    class="form-control mt-3"
+                    id="psd_2"
+                    name="confirm_password"
+                    placeholder="Confirm Password"
+                  />
                 </div>
-                <button type="submit" class="btn btn-block bg-blue mt-3">
+                <button type="submit" class="btn btn-block btn-success mt-3">
                   Sign Up
                 </button>
               </form>

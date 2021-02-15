@@ -50,34 +50,14 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('approvedorphanages')}}"
+                >Approved Orphanages</a
               >
-                Requirements
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{url_for('newRequirements')}}"
-                  >Add New Requirement</a
-                >
-                <a class="dropdown-item" href="{{url_for('viewRequirements')}}"
-                  >View Exisiting Requirement
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url_for('viewRequirements')}}"
-                  >Requirement History</a
-                >
-              </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('orphanagemanageprofile')}}"
-                >Manage Profile</a
+              <a class="nav-link" href="{{url_for('pendingorphanages')}}"
+                >Pending Orphanages</a
               >
             </li>
             <li class="nav-item">
@@ -86,36 +66,56 @@
           </ul>
         </div>
       </nav>
-      <!-- Main Body -->
+     <!-- Main Body -->
       <div class="main-container container">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
-              <div class="card-body">
-                <h5 class="card-title text-success">Requests Expiring today</h5>
-                <p class="card-text">0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
-              <div class="card-body">
-                <h5 class="card-title text-success">Donations Received</h5>
-                <p class="card-text">0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
-              <div class="card-body">
-                <h5 class="card-title text-success">Ongoing Requests</h5>
-                <p class="card-text">1</p>
-              </div>
-            </div>
+        <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
+          <div class="card-body">
+            <h5 class="card-title text-success">Approved orphanages</h5>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Orphanage Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Approved on</th>
+                  <th scope="col">Other Info</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Karunai Illam</td>
+                  <td>koyambedu,chennai</td>
+                  <td>19/02/2021</td>
+                  <td>
+                      <button type="submit" class="btn btn-success">
+                View Details
+              </button>
+                  </td>
+                </tr>
+                <!-- <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
+                </tr> -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </div>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

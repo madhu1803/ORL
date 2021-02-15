@@ -5,35 +5,19 @@ body {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
+  font-family: "Montserrat", sans-serif;
 }
 
 /* general styling */
-.txt-dblue {
-  color: #3e5eab !important;
-}
-.txt-blue {
-  color: #5580e9 !important;
-}
-.txt-grey {
-  color: #c1c8e4 !important;
-}
 
-.bg-grey {
-  background-color: #c1c8e4 !important;
-}
-
-.bg-dblue {
-  background-color: #3e5eab !important;
-}
-
-.bg-blue {
-  background-color: #5580e9 !important;
-  color: white;
+.bg-black {
+  background-color: #10171f !important;
+  color: white !important;
 }
 
 /* navbar */
 .navbar a {
-  color: white !important;
+  color: #5cb85c !important;
 }
 
 .navbar .dropdown-menu a {
@@ -61,6 +45,10 @@ input::placeholder {
 }
 
 /* login and signup styling */
+.login-container {
+  overflow: hidden !important;
+}
+
 .login-container,
 .login-container .row,
 .login-container .login-left-container,
@@ -69,8 +57,19 @@ input::placeholder {
   height: 100%;
 }
 
+.orphanage-signup-container {
+  overflow-y: auto !important;
+  width: 100%;
+  height: 100%;
+}
+
 .login-container .login-left-container {
-  background-color: #3e5eab;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+    url("https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
 }
 
 .login-container .login-left-container .left-text {
@@ -116,6 +115,6 @@ input::placeholder {
 
 /* orphanage profile - receiver */
 .orphanage-profile-container .orphanage-body-container .jumbotron {
-  background-color: #171a29;
+  background-color: #10171f;
   color: white;
 }
