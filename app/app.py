@@ -117,17 +117,25 @@ def submitSignup():
                  for row in results]
         print("Final")
         print(final)
-        for data in final:
-            if(data["email_id"] == email):
-                cursor.close()
-                connection.close()
-                return "Email Already Exists. Please use a different email."
-            else:
-                query = "INSERET INTO users (first_name, last_name, phone_number, email_id, password) VALUES (%s, %s, %s, %s, %s)"
-                cursor.execute(query, (fname, lname, mobile, email, password,))
-                cursor.close()
-                connection.close()
-                return "Success"
+        if final:
+            for data in final:
+                if(data["email_id"] == email):
+                    cursor.close()
+                    connection.close()
+                    return "Email Already Exists. Please use a different email."
+                else:
+                    print("Inside else 2")
+                    query = "INSERT INTO users (first_name, last_name, phone_number, email_id, password) VALUES (%s, %s, %s, %s, %s)"
+                    cursor.execute(query, (fname, lname, mobile, email, password,))
+                    cursor.close()
+                    connection.close()
+                    return "Success"
+        else:
+            query = "INSERT INTO users (first_name, last_name, phone_number, email_id, password) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(query, (fname, lname, mobile, email, password,))
+            cursor.close()
+            connection.close()
+            return "Success"
     else:
         cursor.close()
         connection.close()
