@@ -55,7 +55,7 @@ def submitOrphanageLogin():
             session['user'] = user
             cursor.close()
             # connection.close()
-            return redirect(url_for('dasboard'))
+            return redirect(url_for('dashboard'))
         else:
             cursor.close()
             # connection.close()
@@ -93,7 +93,11 @@ def submitSignup():
                 cursor.execute(query,(fname, lname, mobile, email, password,))
                 cursor.close()
                 connection.close()
-        return "Success"
+                return "Success"
+    else:
+        cursor.close()
+        connection.close()
+        return "Error"
 
 
 @app.route('/submitLogin', methods=['POST'])
@@ -188,7 +192,7 @@ def getOrphanages():
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row)) for row in results]
     cursor.close()
-    connection.close()
+    # connection.close()
     return {"result":final}
 
 @app.route('/orphanage/')

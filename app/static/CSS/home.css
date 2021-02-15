@@ -6,6 +6,7 @@ body {
   height: 100%;
   width: 100%;
 }
+
 /* general styling */
 .txt-dblue {
   color: #3e5eab !important;
@@ -33,6 +34,10 @@ body {
 /* navbar */
 .navbar a {
   color: white !important;
+}
+
+.navbar .dropdown-menu a {
+  color: #5580e9 !important;
 }
 
 /* input component */
