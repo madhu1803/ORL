@@ -34,6 +34,11 @@ def pendingorphanages():
     return render_template('Admindashboard-pending.html')
 
 
+@app.route('/admin/dashboard/view-orphanage-details')
+def vieworphanages():
+    return render_template('Admindashboard-viewdetails.html')
+
+
 @app.route('/login')
 def login():
     return render_template('login.html')
@@ -126,7 +131,8 @@ def submitSignup():
                 else:
                     print("Inside else 2")
                     query = "INSERT INTO users (first_name, last_name, phone_number, email_id, password) VALUES (%s, %s, %s, %s, %s)"
-                    cursor.execute(query, (fname, lname, mobile, email, password,))
+                    cursor.execute(
+                        query, (fname, lname, mobile, email, password,))
                     cursor.close()
                     connection.close()
                     return "Success"
