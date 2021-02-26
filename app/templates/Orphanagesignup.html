@@ -36,7 +36,7 @@
         <div class="login-left-container col-lg-6 d-none d-lg-block">
           <h2 class="text-white left-text">Orphanage Resource Locator</h2>
           <div style="text-align: center" class="left-container-links">
-            <a href="{{url_for('login')}}" class="text-success text-center"
+            <a href="{{url_for('orphanagelogin')}}" class="text-success text-center"
               >Login</a
             >
           </div>
@@ -46,7 +46,7 @@
           <div class="main-container">
             <div class="field-container">
               <h3 class="text-success">Orphanage Registration</h3>
-              <form method="POST" action="{{url_for('submitSignup')}}">
+              <form method="POST" action="{{url_for('submitOrphanageSignup')}}" enctype = "multipart/form-data">
                 <div class="form-group">
                   <input
                     type="text"
@@ -54,6 +54,7 @@
                     class="form-control mt-3"
                     id="oname"
                     placeholder="Orphanage Name"
+                    required
                   />
                 </div>
                 <div class="form-group">
@@ -63,6 +64,7 @@
                     class="form-control mt-3"
                     id="cname"
                     placeholder="Caretaker Name"
+                    required
                   />
                 </div>
                 <div class="form-group">
@@ -72,6 +74,7 @@
                     class="form-control mt-3"
                     id="email"
                     placeholder="Email Address"
+                    required
                   />
                 </div>
                 <div class="form-group">
@@ -81,36 +84,39 @@
                     class="form-control mt-3"
                     id="mobile_number"
                     placeholder="Mobile Number"
+                    required
                   />
                 </div>
                 <!-- address-line1 input-->
                 <div class="form-group">
                   <input
                     type="text"
-                    name="address-line1"
+                    name="address_line1"
                     class="form-control mt-3"
                     id="address-line1"
-                    placeholder="address line 1"
+                    placeholder="Address Line 1"
+                    required
                   />
                 </div>
                 <!-- address-line2 input-->
                 <div class="form-group">
                   <input
                     id="address-line2"
-                    name="address-line2"
+                    name="address_line2"
                     type="text"
                     class="form-control mt-3"
-                    placeholder="address line 2"
+                    placeholder="Address Line 2"
+                    required
                   />
                 </div>
                 <!-- address-line3 input-->
                 <div class="form-group">
                   <input
                     id="address-line3"
-                    name="address-line3"
+                    name="address_line3"
                     type="text"
                     class="form-control mt-3"
-                    placeholder="address line 3"
+                    placeholder="Address Line 3"
                   />
                 </div>
                 <!-- locality input-->
@@ -118,9 +124,10 @@
                   <input
                     id="locality"
                     name="locality"
-                    type="locality"
+                    type="text"
                     class="form-control mt-3"
-                    placeholder="locality"
+                    placeholder="Area / Locality"
+                    required
                   />
                 </div>
                 <!-- city input-->
@@ -131,6 +138,7 @@
                     type="text"
                     class="form-control mt-3"
                     placeholder="City"
+                    required
                   />
                 </div>
                 <!-- region input-->
@@ -141,16 +149,18 @@
                     type="text"
                     class="form-control mt-3"
                     placeholder="State / Province / Region"
+                    required
                   />
                 </div>
                 <!-- postal-code input-->
                 <div class="form-group">
                   <input
                     id="postal-code"
-                    name="postal-code"
+                    name="pin_code"
                     type="number"
                     class="form-control mt-3"
                     placeholder="Postal Code"
+                    required
                   />
                 </div>
                 <!-- No of children -->
@@ -161,6 +171,7 @@
                     class="form-control mt-3"
                     id="child_no"
                     placeholder="No of Children"
+                    required
                   />
                   <!-- About -->
                   <div class="form-group">
@@ -168,15 +179,17 @@
                     type="text"
                     class="form-control mt-3"
                     placeholder="About orphanage"
+                    name="about"
+                    required
                   ></textarea>
                 </div>
-                 <!-- Lattitude and longitutde-->
-                 <div class="form-group">
-               <input class="form-control" type="text" placeholder="Lattitude" readonly>
-                 </div>
-                 <div class="form-group">
-               <input class="form-control" type="text" placeholder="Longitude" readonly>
-               </div>
+                <!-- Lattitude and longitutde-->
+                <div class="form-group">
+                  <input class="form-control" type="text" placeholder="Lattitude" readonly id="lat" name="latitude">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="text" placeholder="Longitude" readonly id="lon" name="longitude">
+                </div>
                
                <!-- Password -->
                 <div class="form-group">
@@ -186,6 +199,7 @@
                     id="psd_1"
                     name="password"
                     placeholder="New Password"
+                    required
                   />
                 </div>
                 <div class="form-group">
@@ -195,6 +209,7 @@
                     id="psd_2"
                     name="confirm_password"
                     placeholder="Confirm Password"
+                    required
                   />
                 </div>
                 <!-- Upload docs -->
@@ -204,6 +219,9 @@
                       type="file"
                       class="custom-file-input"
                       id="inputGroupFile02"
+                      accept=".pdf, .jpg, .jpeg"
+                      required
+                      name="registration"
                     />
                     <label
                       class="custom-file-label"
@@ -224,6 +242,9 @@
                       type="file"
                       class="custom-file-input"
                       id="inputGroupFile02"
+                      accept=".pdf, .jpg, .jpeg"
+                      required
+                      name="other"
                     />
                     <label
                       class="custom-file-label"
@@ -261,5 +282,18 @@
       integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
       crossorigin="anonymous"
     ></script>
+    <!-- Get User Location -->
+    <!-- <script src="{{url_for('static', filename='JS/getLocation.js')}}"></script> -->
+    <script>
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+      function showPosition(position){
+        $("#lat").val(position.coords.latitude);
+        $("#lon").val(position.coords.longitude);
+      }
+    </script>
   </body>
 </html>

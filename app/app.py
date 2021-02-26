@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
+from werkzeug.utils import secure_filename
 from datetime import timedelta
 import mysql.connector
 import json
+import os
 
 app = Flask(__name__)
 app.secret_key = "hello"
 app.permanent_session_lifetime = timedelta(minutes=60)
+app.config['UPLOAD_FOLDER'] = 'orphanage_docs'
 
 config = {
     'user': 'root',
@@ -113,7 +116,7 @@ def submitSignup():
     if (password == confirm_password):
         connection = mysql.connector.connect(**config)
         cursor = connection.cursor()
-        query = "SELECT * FROM orphanage_users WHERE email_id = %s"
+        query = "SELECT * FROM users WHERE email_id = %s"
         cursor.execute(query, (email,))
         results = cursor.fetchall()
         print("Results")
@@ -147,6 +150,98 @@ def submitSignup():
         connection.close()
         return "Error"
 
+@app.route('/submitOrphanageSignup', methods=['POST'])
+def submitOrphanageSignup():
+    orphanage_name = request.form.get('orphanage_name')
+    caretaker_name = request.form.get('caretaker_name')
+    email = request.form.get('email')
+    mobile = request.form.get('mobile')
+    address1 = request.form.get('address_line1')
+    address2 = request.form.get('address_line2')
+    address3 = request.form.get('address_line3')
+    area = request.form.get('locality')
+    city = request.form.get('city')
+    state = request.form.get('state')
+    pin = request.form.get('pin_code')
+    no_of_children = request.form.get('child_no')
+    about = request.form.get('about')
+    latitude = request.form.get('latitude')
+    longitude = request.form.get('longitude')
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+    registration = request.files['registration']
+    registration_path = os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(registration.filename))
+    registration.save(registration_path)
+    other = request.files['other']
+    other_path = os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(other.filename))
+    other.save(other_path)
+    if password == confirm_password:
+        connection = mysql.connector.connect(**config)
+        cursor = connection.cursor()
+        query = "SELECT * FROM orphanage_users WHERE email_id = %s"
+        cursor.execute(query, (email,))
+        results = cursor.fetchall()
+        print("Results")
+        print(results)
+        final = [dict(zip([key[0] for key in cursor.description], row))
+                 for row in results]
+        print("Final")
+        print(final)
+        if final:
+            for data in final:
+                if(data["email_id"] == email):
+                    cursor.close()
+                    connection.close()
+                    return "Email Already Exists. Please use a different email."
+                else:
+                    print("Inside else 2")
+                    query = "INSERT INTO orphanage_users (orphanage_name, phone_number, email_id, caretaker_name, no_of_children, about, password) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                    cursor.execute(query, (orphanage_name, mobile, email, caretaker_name, no_of_children, about, password,))
+                    cursor.close()
+                    query = "SELECT * FROM orphanage_users ORDER BY or_user_id DESC LIMIT 1"
+                    cursor.execute(query)
+                    results = cursor.fetchall()
+                    final = [dict(zip([key[0] for key in cursor.description], row))
+                        for row in results]
+                    id = final[0]["or_user_id"]
+                    query = "INSERT INTO orphanage_addresses (or_user_id, address_line1, address_line2, address_line3, area, city, pin_code, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                    cursor.execute(query,(id, address1, address2, address3, area, city, pin, latitude, longitude,))
+                    cursor.close()
+                    query = "INSERT INTO orphanage_files (or_user_id, registration, other) VALUES (%s, %s, %s)"
+                    cursor.execute(query, (id, registration_path, other_path,))
+                    connection.close()
+                    return "Success"
+        else:
+            query = "INSERT INTO orphanage_users (orphanage_name, phone_number, email_id, caretaker_name, no_of_children, about, password) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(query, (orphanage_name, mobile, email, caretaker_name, no_of_children, about, password,))
+            cursor.close()
+            cursor = connection.cursor()
+            query = "SELECT * FROM orphanage_users ORDER BY or_user_id DESC LIMIT 1"
+            cursor.execute(query)
+            results = cursor.fetchall()
+            final = [dict(zip([key[0] for key in cursor.description], row))
+                 for row in results]
+            if final:
+                id = final[0]["or_user_id"]
+                query = "INSERT INTO orphanage_addresses (or_user_id, address_line1, address_line2, address_line3, area, city, pin_code, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                cursor.execute(query,(id, address1, address2, address3, area, city, pin, latitude, longitude,))
+                cursor.close()
+                cursor = connection.cursor()
+                query = "INSERT INTO orphanage_files (or_user_id, registration, other) VALUES (%s, %s, %s)"
+                cursor.execute(query, (id, registration_path, other_path,))
+                cursor.close()
+            else:
+                query = "INSERT INTO orphanage_addresses (or_user_id, address_line1, address_line2, address_line3, area, city, pin_code, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                cursor.execute(query,(1, address1, address2, address3, area, city, pin, latitude, longitude,))
+                cursor.close()
+                cursor = connection.cursor()
+                query = "INSERT INTO orphanage_files (or_user_id, registration, other) VALUES (%s, %s, %s)"
+                cursor.execute(query, (1, registration_path, other_path,))
+                cursor.close()
+            connection.close()
+            return "Success"
+    else:
+        return redirect('/orphanage/register')
 
 @app.route('/submitLogin', methods=['POST'])
 def submitLogin():
