@@ -13,7 +13,7 @@
       rel="stylesheet"
     />
     <!-- font awesome -->
-    <link rel="stylesheet" href="../static/CSS/fontawesome.css" />
+    <link rel="stylesheet" href="{{url_for('static', filename='CSS/fontawesome.css')}}" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -81,7 +81,19 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                {% for i in range(0, data|length) %}
+                  <tr>
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{data[i].orphanage_name}}</td>
+                    <td>{{data[i].area}}, {{data[i].city}}</td>
+                    <td>
+                      <button class="btn bg-black text-white">
+                        View Details & Approve
+                      </button>
+                    </td>
+                  </tr>
+                {% endfor %}
+                <!-- <tr>
                   <th scope="row">1</th>
                   <td>Karunai Illam</td>
                   <td>koyambedu,chennai</td>
@@ -90,7 +102,7 @@
                 View Details & Approve
               </button>
                   </td>
-                </tr>
+                </tr> -->
                 <!-- <tr>
                   <th scope="row">1</th>
                   <td>Mark</td>

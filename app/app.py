@@ -18,13 +18,6 @@ config = {
     'database': 'orl',
     'autocommit': True
 }
-# connection = mysql.connector.connect(**config)
-
-
-# def createConnection():
-#     cursor = connection.cursor()
-#     return cursor
-
 
 # admin modules
 @app.route('/admin/dashboard/approved-orphanages')
@@ -34,7 +27,26 @@ def approvedorphanages():
 
 @app.route('/admin/dashboard/pending-orphanages')
 def pendingorphanages():
-    return render_template('Admindashboard-pending.html')
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT * FROM approvals WHERE account_status = 0"
+    cursor.execute(query)
+    results = cursor.fetchall()
+    final = [dict(zip([key[0] for key in cursor.description], row))
+                 for row in results]
+    details = []
+    for item in final:
+        query = "SELECT orphanage_name, area, city FROM orphanage_users ou INNER JOIN orphanage_addresses oa ON ou.or_user_id = oa.or_user_id INNER JOIN orphanage_files of ON oa.or_user_id = of.or_user_id WHERE ou.or_user_id = %s"
+        cursor.execute(query, (item['or_user_id'],))
+        results = cursor.fetchall()
+        final1 = [dict(zip([key[0] for key in cursor.description], row))
+                    for row in results]
+        details.append(final1[0])
+    print("Final 1")
+    print(final1)
+    print("Details")
+    print(details)
+    return render_template('Admindashboard-pending.html', data= details)
 
 
 @app.route('/admin/dashboard/view-orphanage-details')
@@ -209,6 +221,7 @@ def submitOrphanageSignup():
                     cursor.close()
                     query = "INSERT INTO orphanage_files (or_user_id, registration, other) VALUES (%s, %s, %s)"
                     cursor.execute(query, (id, registration_path, other_path,))
+                    cursor.close()
                     connection.close()
                     return "Success"
         else:
@@ -230,6 +243,10 @@ def submitOrphanageSignup():
                 query = "INSERT INTO orphanage_files (or_user_id, registration, other) VALUES (%s, %s, %s)"
                 cursor.execute(query, (id, registration_path, other_path,))
                 cursor.close()
+                cursor = connection.cursor()
+                query = "INSERT INTO approvals (or_user_id) VALUES (%s)"
+                cursor.execute(query,(id,))
+                cursor.close()
             else:
                 query = "INSERT INTO orphanage_addresses (or_user_id, address_line1, address_line2, address_line3, area, city, pin_code, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
                 cursor.execute(query,(1, address1, address2, address3, area, city, pin, latitude, longitude,))
@@ -237,6 +254,10 @@ def submitOrphanageSignup():
                 cursor = connection.cursor()
                 query = "INSERT INTO orphanage_files (or_user_id, registration, other) VALUES (%s, %s, %s)"
                 cursor.execute(query, (1, registration_path, other_path,))
+                cursor.close()
+                cursor = connection.cursor()
+                query = "INSERT INTO approvals (or_user_id) VALUES (%s)"
+                cursor.execute(query,(1,))
                 cursor.close()
             connection.close()
             return "Success"
