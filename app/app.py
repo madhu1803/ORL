@@ -49,6 +49,11 @@ def vieworphanages():
     return render_template('Admindashboard-viewdetails.html')
 
 
+@app.route('/admin/dashboard/rejected-orphanage-details')
+def rejectedvieworphanages():
+    return render_template('Admindashboard-rejecteddetails.html')
+
+
 @app.route('/login')
 def login():
     return render_template('login.html')

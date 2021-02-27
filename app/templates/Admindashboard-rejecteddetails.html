@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+    <!-- font awesome -->
+    <link rel="stylesheet" href="../static/CSS/fontawesome.css" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{url_for('static',filename = 'CSS/home.css')}}" />
+    <title>Orphanage Profile</title>
+</head>
+
+<body>
+    <!-- orphanage profile container -->
+    <div class="orphanage-profile-container">
+        <!-- Navbar -->
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-black shadow p-3 mb-5 bg-white rounded">
+            <a class="navbar-brand" href="{{url_for('admin')}}">ORL</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('approvedorphanages')}}">Approved Orphanages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('pendingorphanages')}}">Pending Orphanages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('logout')}}">Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Main body -->
+        <div class="orphanage-body-container">
+            <!-- about -->
+            <div class="container about-container">
+                <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <p class="display-5" id="name">Orphanage Name : </p>
+                        <p id="address">
+                            Address : 6th cross street , Vadapalani , chennai - 600089.
+                        </p>
+                        <p id="phone">Mobile Number +91 123456789</p>
+                        <p class="card-text">
+                            Care Taker : Mr. <span id="caretaker"></span>
+                        </p>
+                        <p class="card-text">
+                            No of Children : <span id="children"></span>
+                        </p>
+                        <p class="card-text">
+                            Phone No.: <span id="phone_contact"></span>
+                        </p>
+                        <p class="card-text">Email : <span id="email"></span></p>
+                        <h5 class="card-title text-success">About</h5>
+                        <p class="card-text" id="about">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting
+                            industry. Lorem Ipsum has been the industry's standard dummy
+                            text ever since the 1500s, when an unknown printer took a galley
+                            of type and scrambled it to make a type specimen book. It has
+                            survived not only five centuries, but also the leap into
+                            electronic typesetting, remaining essentially unchanged. It was
+                            popularised in the 1960s with the release of Letraset sheets
+                            containing Lorem Ipsum passages, and more recently with desktop
+                            publishing software like Aldus PageMaker including versions of
+                            Lorem Ipsum.
+                        </p>
+                        <p>Documents</p>
+                        <p> Uploaded
+                            Files to be displayed</p>
+                        <h5>Reason For rejecting orphanages</h5>
+
+                        <ol>...</ol>
+                        <ol>...</ol>
+                        <ol>...</ol>
+
+                        <a href="#" class="btn btn-success">Approve</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
+        <!-- Custom JS -->
+        <script src="{{url_for('static', filename='JS/home.js')}}"></script>
+</body>
+
+</html>
