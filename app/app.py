@@ -24,6 +24,11 @@ config = {
 
 
 # admin modules
+@app.route('/admin/dashboard')
+def admin():
+    return render_template('Admindashboard.html')
+
+
 @app.route('/admin/dashboard/approved-orphanages')
 def approvedorphanages():
     return render_template('Admindashboard-approved.html')
@@ -32,6 +37,11 @@ def approvedorphanages():
 @app.route('/admin/dashboard/pending-orphanages')
 def pendingorphanages():
     return render_template('Admindashboard-pending.html')
+
+
+@app.route('/admin/dashboard/rejected-orphanages')
+def rejectedorphanages():
+    return render_template('Admindashboard-rejected.html')
 
 
 @app.route('/admin/dashboard/view-orphanage-details')

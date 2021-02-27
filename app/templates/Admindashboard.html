@@ -26,7 +26,7 @@
       rel="stylesheet"
       href="{{url_for('static',filename = 'CSS/home.css')}}"
     />
-    <title>ORL</title>
+    <title>ORL Admin</title>
   </head>
 
   <body>
@@ -50,7 +50,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+           <li class="nav-item">
               <a class="nav-link" href="{{url_for('approvedorphanages')}}"
                 >Approved Orphanages</a
               >
@@ -67,56 +67,51 @@
         </div>
       </nav>
      <!-- Main Body -->
-      <div class="main-container container">
-        <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
+       <!-- dashboard user msg -->
+  <div class="container dashboard-container">
+    <div class="user-msg pb-5">
+      <div class="text-center">
+        <i class="fas fa-user"></i>
+        <h3 class="purple-txt">Welcome <span id="user"></span></h3>
+        <h6 class="text-muted">View approved,pending & rejected orphanages in this dashboard</h6>
+      </div>
+    </div>
+    <div class="row card-container">
+      <div class="col-lg-4">
+        <div class="card text-center  card-dashboard pt-2 pb-2 shadow p-3 mb-5 bg-white rounded hvr-float">
           <div class="card-body">
-            <h5 class="card-title text-success">Approved orphanages</h5>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Orphanage Name</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Approved on</th>
-                  <th scope="col">Other Info</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Karunai Illam</td>
-                  <td>koyambedu,chennai</td>
-                  <td>19/02/2021</td>
-                  <td>
-                      <a class="btn bg-black text-white" href="{{url_for('vieworphanages')}}">
-                        View details
-                        </a>
-                      
-                  </td>
-                </tr>
-                <!-- <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr> -->
-              </tbody>
-            </table>
+            <i class="fas fa-bookmark"></i>
+            <h5 class="card-title mt-2">View Approved orphanages</h5>
+            <p class="card-title count"><span id="existingTotal"></span>
+              <a href="{{url_for('approvedorphanages')}}" class="btn btn-success">View Approved orphanages</a>
+            </p>
           </div>
         </div>
       </div>
+      <div class="col-lg-4">
+        <div class="card text-center bg-light card-dashboard pt-2 pb-2 shadow p-3 mb-5 bg-white rounded hvr-float">
+          <div class="card-body">
+            <i class="fas fa-file-signature"></i>
+            <h5 class="card-title mt-2">View pending orphanages</h5>
+            <p class="card-title"><span id="newTotal"></span>
+              <a href="{{url_for('pendingorphanages')}}" class="btn btn-secondary">View pending orphanages</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card text-center bg-light card-dashboard pt-2  pb-2 shadow p-3 mb-5 bg-white rounded hvr-float">
+          <div class="card-body mt-2">
+            <i class="fas fa-book-open"></i>
+            <h5 class="card-title">View rejected orphanages</h5>
+            <p class="card-title"><span id="completedTotal"></span>
+              <a href="{{url_for('rejectedorphanages')}}" class="btn btn-danger">View rejected orphanages</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
