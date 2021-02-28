@@ -35,7 +35,7 @@
       <nav
         class="navbar navbar-expand-lg navbar-light bg-black shadow p-3 mb-5 bg-white rounded"
       >
-        <a class="navbar-brand" href="{{url_for('home')}}">ORL</a>
+        <a class="navbar-brand" href="{{url_for('admin')}}">ORL</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -70,7 +70,7 @@
       <div class="main-container container">
         <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
           <div class="card-body">
-            <h5 class="card-title text-success">Pending orphanages</h5>
+            <h5 class="card-title text-secondary">Pending orphanages</h5>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -98,7 +98,7 @@
                   <td>Karunai Illam</td>
                   <td>koyambedu,chennai</td>
                   <td>
-                      <button type="submit" class="btn bg-black text-white">
+                      <a class="btn bg-black text-white" href="{{url_for('vieworphanages')}}">
                 View Details & Approve
               </button>
                   </td>

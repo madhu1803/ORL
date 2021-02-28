@@ -20,6 +20,11 @@ config = {
 }
 
 # admin modules
+@app.route('/admin/dashboard')
+def admin():
+    return render_template('Admindashboard.html')
+
+
 @app.route('/admin/dashboard/approved-orphanages')
 def approvedorphanages():
     connection = mysql.connector.connect(**config)
@@ -72,9 +77,19 @@ def pendingorphanages():
     return render_template('Admindashboard-pending.html', data= details)
 
 
+@app.route('/admin/dashboard/rejected-orphanages')
+def rejectedorphanages():
+    return render_template('Admindashboard-rejected.html')
+
+
 @app.route('/admin/dashboard/view-orphanage-details')
 def vieworphanages():
     return render_template('Admindashboard-viewdetails.html')
+
+
+@app.route('/admin/dashboard/rejected-orphanage-details')
+def rejectedvieworphanages():
+    return render_template('Admindashboard-rejecteddetails.html')
 
 
 @app.route('/login')
