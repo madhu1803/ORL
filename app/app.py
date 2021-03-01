@@ -22,14 +22,31 @@ config = {
 # admin modules
 @app.route('/admin/dashboard')
 def admin():
-    return render_template('Admindashboard.html')
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT COUNT(or_user_id) FROM approvals WHERE account_status = 'approved'"
+    cursor.execute(query)
+    results = cursor.fetchall()
+    cursor.close()
+    cursor = connection.cursor()
+    query = "SELECT count(or_user_id) FROM approvals WHERE account_status = 'pending'"
+    cursor.execute(query)
+    results1 = cursor.fetchall()
+    cursor.close()
+    cursor = connection.cursor()
+    query = "SELECT count(or_user_id) FROM approvals WHERE account_status = 'rejected'"
+    cursor.execute(query)
+    results2 = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return render_template('Admindashboard.html', approved= results[0][0], pending= results1[0][0], rejected= results2[0][0])
 
 
 @app.route('/admin/dashboard/approved-orphanages')
 def approvedorphanages():
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
-    query = "SELECT * FROM approvals WHERE account_status = 1"
+    query = "SELECT * FROM approvals WHERE account_status = 'approved'"
     cursor.execute(query)
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row))
@@ -53,7 +70,7 @@ def approvedorphanages():
 def pendingorphanages():
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
-    query = "SELECT * FROM approvals WHERE account_status = 0"
+    query = "SELECT * FROM approvals WHERE account_status = 'pending'"
     cursor.execute(query)
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row))
