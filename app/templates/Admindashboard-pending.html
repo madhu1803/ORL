@@ -87,9 +87,9 @@
                     <td>{{data[i].orphanage_name}}</td>
                     <td>{{data[i].area}}, {{data[i].city}}</td>
                     <td>
-                      <button class="btn bg-black text-white">
+                      <a class="btn bg-black text-white" href="{{url_for('vieworphanages')}}">
                         View Details & Approve
-                      </button>
+                      </a>
                     </td>
                   </tr>
                 {% endfor %}

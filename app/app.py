@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory
 from werkzeug.utils import secure_filename
 from datetime import timedelta
 import mysql.connector
@@ -124,7 +124,14 @@ def rejectedorphanages():
 def vieworphanages():
     return render_template('Admindashboard-viewdetails.html')
 
-
+@app.route('/viewfile/registration/<id>')
+def viewfile(id):
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT registration FROM orphanage_files WHERE or_user_id = %s" 
+    cursor.execute(query,(id,))
+    results = cursor.fetchall()
+    return send_from_directory(app.config['UPLOAD_FOLDER'], results[0][0])
 @app.route('/admin/dashboard/rejected-orphanage-details')
 def rejectedvieworphanages():
     return render_template('Admindashboard-rejecteddetails.html')
