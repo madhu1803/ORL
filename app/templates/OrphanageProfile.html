@@ -112,9 +112,13 @@
                 </p>
                 <p id="phone">+91 123456789</p>
                 <p>Make a donation instantly!</p>
-                <button type="button" class="btn btn-success">
-                  Donate Now
-                </button>
+                <a
+                    href="#"
+                    class="btn btn-success"
+                    data-toggle="modal"
+                    data-target="#donate-money-modal"
+                    >Donate Now</a
+                  >
               </div>
             </div>
           </div>
@@ -195,6 +199,46 @@
             {% endfor %}
           </div>
           <h6 class="text-danger">No Requirements found</h6>
+        </div>
+      </div>
+    </div>
+    <!-- Donate Money Now  Modal -->
+    <div
+      class="modal fade"
+      id="donate-money-modal"
+      tabindex="-1"
+      aria-labelledby="donateMoneyLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-black">
+            <h5 class="modal-title" id="donateMoneyLabel">Donate Money Now</h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h1>Do you wish to make the donation now?</h1>
+            <form action="/donate/money/{{data[0].or_user_id}}" method="POST">
+              <input type="number" name="money" id="money">
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn bg-black text-white"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-success">Donate</button>
+          </div>
+        </form>
         </div>
       </div>
     </div>

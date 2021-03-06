@@ -4,6 +4,7 @@ from datetime import timedelta
 import mysql.connector
 import json
 import os
+import razorpay
 
 app = Flask(__name__)
 app.secret_key = "hello"
@@ -512,6 +513,34 @@ def viewRequirements():
     else:
         return redirect('/orphanage/login')
 
+@app.route('/donate/money/<id>', methods=['POST'])
+def donateMoney(id):
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    user = session['user']
+    amount = request.form.get("money")
+    query = "INSERT INTO transactions (user_id, or_user_id, item_name, quantity) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (user, id, "Money", amount,))
+    cursor.close()
+    return redirect(url_for('donateMoneyCheckout', orid= id))
+
+@app.route('/donate/money/<orid>/checkout')
+def donateMoneyCheckout(orid):
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    user = session['user']
+    query = "SELECT * FROM transactions WHERE user_id = %s AND or_user_id = %s ORDER BY timestamp DESC LIMIT 1"
+    cursor.execute(query, (user, orid,))
+    results = cursor.fetchall()
+    final = [dict(zip([key[0] for key in cursor.description], row))
+                 for row in results]
+    client = razorpay.Client(auth= ("rzp_test_4eKROKb9Ml5qLs", "cXy7XdRy8d4GLcVQEbH59vz9"))
+    payment = client.order.create({'amount':(int(final[0]['quantity'])*100), 'currency': "INR", 'payment_capture': '1'})
+    return render_template('checkout.html', payment= payment)
+
+@app.route('/success')
+def success():
+    return render_template('donateSuccess.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, ssl_context='adhoc')
