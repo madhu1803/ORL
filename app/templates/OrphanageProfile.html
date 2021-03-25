@@ -253,7 +253,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header bg-black">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Donate Items</h5>
             <button
               type="button"
               class="close text-white"
@@ -265,7 +265,7 @@
           </div>
           <div class="modal-body">
             <h1>Do you wish to make the donation now?</h1>
-            <form action="" method="POST">
+            <form action="/donate/item/{{data[0].or_user_id}}" method="POST">
               <div class="form-group">
                 <label for="item_name">Name of Item</label>
                 <input
@@ -286,17 +286,17 @@
                   name="quantity"
                 />
               </div>
-            </form>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn bg-black text-white"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-success">Donate</button>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn bg-black text-white"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-success">Donate</button>
+          </form>
           </div>
         </div>
       </div>

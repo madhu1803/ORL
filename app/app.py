@@ -538,6 +538,16 @@ def donateMoneyCheckout(orid):
     payment = client.order.create({'amount':(int(final[0]['quantity'])*100), 'currency': "INR", 'payment_capture': '1'})
     return render_template('checkout.html', payment= payment)
 
+@app.route('/donate/item/<orid>', methods=["POST"])
+def donateItem(orid):
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    user = session['user']
+    item_name = request.form.get('item_name')
+    quantity = request.form.get('quantity')
+    query = "INSERT INTO transactions (user_id, or_user_id, item_name, quantity) VALUES (%s, %s,%s, %s)"
+    cursor.execute(query,(user, orid, item_name, quantity))
+    return redirect('/success')
 @app.route('/success')
 def success():
     return render_template('donateSuccess.html')
