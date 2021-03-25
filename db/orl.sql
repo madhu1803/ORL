@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Mar 07, 2021 at 12:15 PM
--- Server version: 5.7.31
--- PHP Version: 7.4.14
+-- Generation Time: Mar 25, 2021 at 07:41 AM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,6 +54,13 @@ CREATE TABLE `admin_users` (
   `email_id` varchar(50) NOT NULL,
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `admin_users`
+--
+
+INSERT INTO `admin_users` (`id`, `first_name`, `last_name`, `phone_number`, `email_id`, `password`) VALUES
+(1, 'Jessica', 'Magdalene', 9791201860, 'jess@admin.com', 'jess123');
 
 -- --------------------------------------------------------
 
@@ -198,7 +205,8 @@ CREATE TABLE `transactions` (
 
 INSERT INTO `transactions` (`id`, `user_id`, `or_user_id`, `item_name`, `quantity`, `timestamp`) VALUES
 (1, 1, 1, 'Rice', 10, '2021-02-07 06:05:45'),
-(13, 1, 1, 'Money', 200, '2021-03-06 11:29:47');
+(13, 1, 1, 'Money', 200, '2021-03-06 11:29:47'),
+(14, 1, 2, 'Clothes', 10, '2021-03-25 07:19:59');
 
 -- --------------------------------------------------------
 
@@ -302,7 +310,7 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT for table `admin_users`
 --
 ALTER TABLE `admin_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `approvals`
@@ -338,7 +346,7 @@ ALTER TABLE `requirements`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`
