@@ -70,6 +70,30 @@
                   Login
                 </button>
               </form>
+              {% elif msg == '/admin/login' %}
+              <form action="{{url_for('submitAdminLogin')}}" method="POST">
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-control mt-3"
+                    id="email"
+                    name="email"
+                    placeholder="Email Address"
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control mt-3"
+                    id="password1"
+                    name="password"
+                    placeholder="Password"
+                  />
+                </div>
+                <button type="submit" class="btn-success btn-block mt-3">
+                  Login
+                </button>
+              </form>
               {% else %}
               <form action="{{url_for('submitLogin')}}" method="POST">
                 <div class="form-group">

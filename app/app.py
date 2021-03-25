@@ -21,6 +21,44 @@ config = {
 }
 
 # admin modules
+@app.route('/admin/login')
+def adminLogin():
+    path = request.path
+    flash(path)
+    print(path)
+    return render_template('login.html')
+
+@app.route('/submitAdminLogin', methods=['POST'])
+def submitAdminLogin():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT * FROM admin_users WHERE email_id = %s"
+    cursor.execute(query, (email,))
+    results = cursor.fetchall()
+    print("Results")
+    print(results)
+    final = [dict(zip([key[0] for key in cursor.description], row))
+             for row in results]
+    print("Final\n")
+    print(final)
+    if cursor.rowcount != 0:
+        if(final[0]["email_id"] == email) and final[0]["password"] == password:
+            user = final[0]["id"]
+            session['user'] = user
+            cursor.close()
+            connection.close()
+            return redirect(url_for('admin'))
+        else:
+            cursor.close()
+            connection.close()
+            return "Error"
+    else:
+        cursor.close()
+        connection.close()
+        return "No users found"
+
 @app.route('/admin/dashboard')
 def admin():
     connection = mysql.connector.connect(**config)
@@ -548,6 +586,7 @@ def donateItem(orid):
     query = "INSERT INTO transactions (user_id, or_user_id, item_name, quantity) VALUES (%s, %s,%s, %s)"
     cursor.execute(query,(user, orid, item_name, quantity))
     return redirect('/success')
+
 @app.route('/success')
 def success():
     return render_template('donateSuccess.html')
