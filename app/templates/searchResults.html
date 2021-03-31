@@ -73,29 +73,28 @@
               </div>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0" action="/search" method="POST">
+          <form class="form-inline my-2 my-lg-0">
             <input
               class="form-control mr-sm-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
-              name="searchQuery"
-              required
             />
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
               Search
             </button>
+            <a class="btn btn-success my-2 my-sm-0 ml-1" href="{{url_for('logout')}}">
+              Logout
+            </a>
           </form>
-          <a class="btn btn-success my-2 my-sm-0 ml-1" href="{{url_for('logout')}}">
-            Logout
-          </a>
         </div>
       </nav>
 
       <!-- Main body -->
+      {% for i in range(0, results|length) %}
       <div class="donor-body-container container">
         <div class="row" id="cards">
-          <!-- <div class="col-lg-4">
+          <div class="col-lg-4">
             <div class="card shadow p-3 mb-5 bg-white rounded">
               <img
                 src="https://images.unsplash.com/photo-1453967854176-7e6e8270b0b8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
@@ -103,18 +102,18 @@
                 alt="..."
               />
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
+                <h5 class="card-title">{{results[i].orphanage_name}}</h5>
                 <p class="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  {{results[i].about}}
                 </p>
-                <a href="orphanageProfile.html" class="btn btn-primary"
+                <a href="/orphanage/profile/{{results[i].or_user_id}}" class="btn btn-primary"
                   >View More Details</a
                 >
               </div>
             </div>
           </div>
-          <div class="col-lg-4">
+          {% endfor %}
+          <!-- <div class="col-lg-4">
             <div class="card shadow p-3 mb-5 bg-white rounded">
               <img
                 src="https://images.unsplash.com/photo-1453967854176-7e6e8270b0b8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
@@ -224,8 +223,8 @@
       crossorigin="anonymous"
     ></script>
     <!-- Custom JS -->
-    <script src="{{url_for('static', filename='JS/home.js')}}"></script>
+    <!-- <script src="{{url_for('static', filename='JS/home.js')}}"></script> -->
     <!-- Get User Location -->
-    <script src="{{url_for('static', filename='JS/getLocation.js')}}"></script>
+    <!-- <script src="{{url_for('static', filename='JS/getLocation.js')}}"></script> -->
   </body>
 </html>

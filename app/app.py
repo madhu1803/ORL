@@ -591,5 +591,20 @@ def donateItem(orid):
 def success():
     return render_template('donateSuccess.html')
 
+@app.route('/search', methods=["POST", "GET"])
+def search():
+    seearchQuery = request.form.get('searchQuery')
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT * FROM orphanage_users ou INNER JOIN orphanage_addresses oa ON oa.or_user_id = ou.or_user_id WHERE (orphanage_name LIKE %s) OR (address_line1 LIKE %s) OR (address_line2 LIKE %s) OR (address_line3 LIKE %s) OR (area LIKE %s) OR (city LIKE %s)"
+    cursor.execute(query,("%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%"))
+    results = cursor.fetchall()
+    final = [dict(zip([key[0] for key in cursor.description], row))
+                 for row in results]
+    print("Search")
+    print(final)
+    return render_template('searchResults.html', results= final)
+    
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, ssl_context='adhoc')
