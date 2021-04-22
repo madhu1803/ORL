@@ -27,8 +27,10 @@
     <!-- Donor History container -->
     <div class="donor-history-container">
       <!-- Navbar -->
+      <!-- Navbar -->
       <nav
-        class="navbar navbar-expand-lg navbar-light bg-dblue shadow p-3 mb-5 bg-white rounded"
+        class="navbar navbar-expand-lg navbar-dark bg-black shadow p-3 mb-5 bg-white rounded"
+        style="margin-bottom: 5px !important"
       >
         <a class="navbar-brand" href="{{url_for('home')}}">ORL</a>
         <button
@@ -46,7 +48,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-              <a
+              <!-- <a
                 class="nav-link dropdown-toggle location"
                 href="#"
                 id="navbarDropdown"
@@ -56,7 +58,7 @@
                 aria-expanded="false"
               >
                 Location - 6th cross street ramapuram chennai
-              </a>
+              </a> -->
               <div
                 class="dropdown-menu bg-dblue"
                 aria-labelledby="navbarDropdown"
@@ -75,14 +77,12 @@
               placeholder="Search"
               aria-label="Search"
             />
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
               Search
             </button>
-            <a
-              href="{{url_for('logout')}}"
-              class="btn btn-primary my-2 my-sm-0 ml-2"
-              >Logout</a
-            >
+            <a class="btn btn-success my-2 my-sm-0 ml-1" href="{{url_for('logout')}}">
+              Logout
+            </a>
           </form>
         </div>
       </nav>
@@ -92,22 +92,12 @@
         <div class="container requirements-list-container">
           <div class="row">
             <h4 class="ml-3 mb-3">Order History</h4>
-            <div class="col-sm-12">
-              <div class="card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                  <h5 class="card-title">{{data2[i]["orphanage_name"]}}</h5>
-                  <p class="card-text">Order ID: {{data[i]["id"]}}</p>
-                  <p class="card-text">Item name: {{data[i]["item_name"]}}</p>
-                  <p class="card-text">Quantity: {{data[i]["quantity"]}}</p>
-                  <p class="card-text">Timestamp: {{data[i]["timestamp"]}}</p>
-                </div>
-              </div>
-            </div>
+            
             {% for i in range(0, data|length) %}
             <div class="col-sm-12">
               <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                  <h5 class="card-title">{{data2[i]["orphanage_name"]}}</h5>
+                  <h5 class="card-title">{{data[i]["orphanage_name"]}}</h5>
                   <p class="card-text">Order ID: {{data[i]["id"]}}</p>
                   <p class="card-text">Item name: {{data[i]["item_name"]}}</p>
                   <p class="card-text">Quantity: {{data[i]["quantity"]}}</p>
