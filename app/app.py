@@ -22,10 +22,11 @@ config = {
     'autocommit': True
 }
 
+
 @app.before_request
 def do_something_when_a_request_comes_in():
     if request.endpoint == "or_profile":
-	    # tracking.track_visitor()
+        # tracking.track_visitor()
         tracking2.track()
 
 # admin modules
@@ -182,6 +183,15 @@ def vieworphanages(id = 12):
              for row in results]
     cursor.close()
     return render_template('Admindashboard-viewdetails.html', data= final)
+    
+@app.route('/orphanage/money-history')
+def moneyhistoryDonor():
+    return render_template('moneyHistory-Orphanage.html')
+
+
+@app.route('/admin/dashboard/view-orphanage-details')
+def vieworphanages():
+    return render_template('Admindashboard-viewdetails.html')
 
 
 @app.route('/viewfile/registration/<id>')
@@ -223,7 +233,7 @@ def rejectedvieworphanages():
     return render_template('Admindashboard-rejecteddetails.html')
 
 
-@app.route('/login')
+@app.route('/main')
 def login():
     return render_template('MainLogin.html')
 
@@ -253,12 +263,20 @@ def orphanagelogin():
     return render_template('login.html')
 
 
+@app.route('/orphanage/donation-donor')
+def orphanagerequirement():
+    path = request.path
+    flash(path)
+    print(path)
+    return render_template('OrphanageRequirement.html')
+
+
 @app.route('/logout')
 def logout():
     session.pop("user")
     if "user" not in session:
         print("Logged Out")
-    return redirect('/login')
+    return redirect('/main')
 
 
 @app.route('/submitOrphanageLogin', methods=['POST'])
@@ -482,7 +500,7 @@ def submitLogin():
         return "No users found"
 
 
-@app.route('/signup')
+@app.route('/donor/signup')
 def signup():
     return render_template('Donorsignup.html')
 

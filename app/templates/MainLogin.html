@@ -35,9 +35,6 @@
         <!-- Left Container -->
         <div class="login-left-container col-lg-6 d-none d-lg-block">
           <h2 class="text-white left-text">Orphanage Resource Locator</h2>
-          <div style="text-align: center" class="left-container-links">
-            <a href="{{url_for('signup')}}" class="text-success">Signup</a>
-          </div>
         </div>
         <!-- Right Container -->
         <div class="login-right-container col-lg-6">
@@ -65,6 +62,21 @@
                 class="btn btn-block btn-success mt-3"
               >
                 Orphanage Login
+              </a>
+              <h3 class="text-success mt-2">Signup</h3>
+              <a
+                href="{{url_for('signup')}}"
+                role="button"
+                class="btn btn-block btn-success mt-3"
+              >
+                Donor Signup
+              </a>
+              <a
+                href="{{url_for('orphanageregister')}}"
+                role="button"
+                class="btn btn-block btn-success mt-3"
+              >
+                Orphanage Signup
               </a>
             </div>
           </div>

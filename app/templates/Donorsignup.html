@@ -101,9 +101,24 @@
                     placeholder="Confirm Password"
                   />
                 </div>
-                <button type="submit" class="btn btn-block btn-success mt-3">
+                <div class="form-group">
+                  <input
+                    type="number"
+                    class="form-control mt-3"
+                    id="psd_2"
+                    name="mobile_number"
+                    placeholder="Mobile Number"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-block btn-success mt-3 mb-3"
+                >
                   Sign Up
                 </button>
+                <a href="{{url_for('login')}}" class="text-success">
+                  Back to Main Menu
+                </a>
               </form>
             </div>
           </div>

@@ -7,13 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <!-- Google font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
-      rel="stylesheet"
-    />
-    <!-- font awesome -->
-    <link rel="stylesheet" href="../static/CSS/fontawesome.css" />
+
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -24,12 +18,14 @@
     <!-- Custom CSS -->
     <link
       rel="stylesheet"
-      href="{{url_for('static',filename = 'CSS/home.css')}}"
+      href="{{url_for('static', filename='CSS/home.css')}}"
     />
-    <title>ORL</title>
+    <title>Orphanage-Donor Requirement</title>
   </head>
+
   <body>
-    <div class="requirement-list-container">
+    <!-- Donor History container -->
+    <div class="donor-history-container">
       <!-- Navbar -->
       <nav
         class="navbar navbar-expand-lg navbar-light bg-black shadow p-3 mb-5 bg-white rounded"
@@ -85,57 +81,48 @@
           </ul>
         </div>
       </nav>
-      <!-- Main Body -->
-      <div class="main-container container">
-        <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
-          <div class="card-body">
-            <h5 class="card-title text-success">Requirements List</h5>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Item name</th>
-                  <th scope="col">Required Quantity</th>
-                  <th scope="col">Expiry date</th>
-                  <th scope="col">Timestamp</th>
-                  <th scope="col">Donors</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for i in range(0, data|length) %}
-                <tr>
-                  <th scope="row">{{i+1}}</th>
-                  <td>{{data[i].item_name}}</td>
-                  <td>{{data[i].quantity}}</td>
-                  <td>{{data[i].valid_till}}</td>
-                  <td>{{data[i].timestamp}}</td>
-                  <td>
-                    <a href="{{url_for('orphanagerequirement')}}">
-                      View donors
-                    </a>
-                  </td>
-                </tr>
-                {% endfor %}
-                <!-- <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr> -->
-              </tbody>
-            </table>
+      <!-- Main body -->
+      <div class="order-history-container">
+        <!-- Order History -->
+        <div class="container requirements-list-container">
+          <h4 class="ml-3 mb-3">Donors</h4>
+          <p class="ml-3 mb-3">Requirement Item Name</p>
+          <p class="ml-3 mb-3">Qty Required : 10</p>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                  <h5 class="card-title">Donor Name</h5>
+                  <p class="card-text">Order ID:</p>
+                  <p class="card-text">Item name:</p>
+                  <p class="card-text">Quantity:</p>
+                  <p class="card-text">Timestamp:</p>
+                  <p class="card-text">Mobile no:</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                  <h5 class="card-title">donor name</h5>
+                  <p class="card-text">Order ID:</p>
+                  <p class="card-text">Item name:</p>
+                  <p class="card-text">Quantity:</p>
+                  <p class="card-text">Timestamp:</p>
+                  <p class="card-text">Mobile no:</p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-sm-12">
+              <div class="card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                  <h5 class="card-title">Orpahange Name</h5>
+                  <p class="card-text">Item name</p>
+                  <p class="card-text">Quantity</p>
+                  <a href="#" class="btn btn-success">Donation done</a>
+                </div>
+              </div>
+            </div> -->
           </div>
         </div>
       </div>
