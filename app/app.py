@@ -182,11 +182,21 @@ def vieworphanages(id = 12):
     final = [dict(zip([key[0] for key in cursor.description], row))
              for row in results]
     cursor.close()
+    connection.close()
     return render_template('Admindashboard-viewdetails.html', data= final)
 
 @app.route('/orphanage/money-history')
 def moneyhistoryDonor():
-    return render_template('moneyHistory-Orphanage.html')
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT phone_number, quantity, transactions.timestamp, CONCAT(first_name, ' ', last_name) AS donor_name FROM users INNER JOIN transactions ON transactions.user_id = users.user_id WHERE or_user_id = %s AND item_name = 'Money'"
+    cursor.execute(query, (session['user'],))
+    results = cursor.fetchall()
+    final = [dict(zip([key[0] for key in cursor.description], row))
+             for row in results]
+    cursor.close()
+    connection.close()
+    return render_template('moneyHistory-Orphanage.html', data= final)
 
 @app.route('/viewfile/registration/<id>')
 def viewfile(id):

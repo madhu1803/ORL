@@ -100,13 +100,15 @@
                 </tr>
               </thead>
               <tbody>
+                {% for i in range(0, data|length) %}
                 <tr>
-                  <th scope="row">1</th>
-                  <td>100</td>
-                  <td>Name</td>
-                  <td>monday 28th feb 2020</td>
-                  <td>1234455</td>
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{data[i].quantity}}</td>
+                  <td>{{data[i].donor_name}}</td>
+                  <td>{{data[i].timestamp}}</td>
+                  <td>{{data[i].phone_number}}</td>
                 </tr>
+                {% endfor %}
                 <!-- <tr>
                   <th scope="row">1</th>
                   <td>Mark</td>
