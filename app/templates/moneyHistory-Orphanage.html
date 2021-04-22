@@ -32,7 +32,7 @@
     <div class="requirement-list-container">
       <!-- Navbar -->
       <nav
-        class="navbar navbar-expand-lg navbar-light bg-black shadow p-3 mb-5 bg-white rounded"
+        class="navbar navbar-expand-lg bg-black shadow p-3 mb-5 bg-white rounded"
       >
         <a class="navbar-brand" href="{{url_for('dashboard')}}">ORL</a>
         <button
@@ -49,6 +49,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
+            <li class="nav-item"></li>
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -69,9 +70,7 @@
                   >View Exisiting Requirement
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{url_for('moneyhistoryDonor')}}"
-                  >Requirement History</a
-                >
+                <a class="dropdown-item" href="#">Requirement History</a>
               </div>
             </li>
             <li class="nav-item">
@@ -89,33 +88,25 @@
       <div class="main-container container">
         <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
           <div class="card-body">
-            <h5 class="card-title text-success">Requirements List</h5>
+            <h5 class="card-title text-success">Money Donations Received</h5>
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Item name</th>
-                  <th scope="col">Required Quantity</th>
-                  <th scope="col">Expiry date</th>
-                  <th scope="col">Timestamp</th>
-                  <th scope="col">Donors</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Donated by</th>
+                  <th scope="col">Timestamp/date</th>
+                  <th scope="col">Mobile Number</th>
                 </tr>
               </thead>
               <tbody>
-                {% for i in range(0, data|length) %}
                 <tr>
-                  <th scope="row">{{i+1}}</th>
-                  <td>{{data[i].item_name}}</td>
-                  <td>{{data[i].quantity}}</td>
-                  <td>{{data[i].valid_till}}</td>
-                  <td>{{data[i].timestamp}}</td>
-                  <td>
-                    <a href="{{url_for('orphanagerequirement')}}">
-                      View donors
-                    </a>
-                  </td>
+                  <th scope="row">1</th>
+                  <td>100</td>
+                  <td>Name</td>
+                  <td>monday 28th feb 2020</td>
+                  <td>1234455</td>
                 </tr>
-                {% endfor %}
                 <!-- <tr>
                   <th scope="row">1</th>
                   <td>Mark</td>

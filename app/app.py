@@ -172,6 +172,11 @@ def rejectedorphanages():
     return render_template('Admindashboard-rejected.html', data=details)
 
 
+@app.route('/orphanage/money-history')
+def moneyhistoryDonor():
+    return render_template('moneyHistory-Orphanage.html')
+
+
 @app.route('/admin/dashboard/view-orphanage-details')
 def vieworphanages():
     return render_template('Admindashboard-viewdetails.html')
