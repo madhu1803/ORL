@@ -97,6 +97,7 @@
                   <th scope="col">Required Quantity</th>
                   <th scope="col">Expiry date</th>
                   <th scope="col">Timestamp</th>
+                  <th scope="col">Donors</th>
                 </tr>
               </thead>
               <tbody>
@@ -107,6 +108,11 @@
                   <td>{{data[i].quantity}}</td>
                   <td>{{data[i].valid_till}}</td>
                   <td>{{data[i].timestamp}}</td>
+                  <td>
+                    <a href="{{url_for('orphanagerequirement')}}">
+                      View donors
+                    </a>
+                  </td>
                 </tr>
                 {% endfor %}
                 <!-- <tr>

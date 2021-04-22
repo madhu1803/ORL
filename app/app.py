@@ -222,6 +222,14 @@ def orphanagelogin():
     return render_template('login.html')
 
 
+@app.route('/orphanage/donation-donor')
+def orphanagerequirement():
+    path = request.path
+    flash(path)
+    print(path)
+    return render_template('OrphanageRequirement.html')
+
+
 @app.route('/logout')
 def logout():
     session.pop("user")

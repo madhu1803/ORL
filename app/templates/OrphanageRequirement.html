@@ -28,9 +28,9 @@
     <div class="donor-history-container">
       <!-- Navbar -->
       <nav
-        class="navbar navbar-expand-lg navbar-light bg-dblue shadow p-3 mb-5 bg-white rounded"
+        class="navbar navbar-expand-lg navbar-light bg-black shadow p-3 mb-5 bg-white rounded"
       >
-        <a class="navbar-brand" href="{{url_for('home')}}">ORL</a>
+        <a class="navbar-brand" href="{{url_for('admin')}}">ORL</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -44,46 +44,11 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle location"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Location - 6th cross street ramapuram chennai
-              </a>
-              <div
-                class="dropdown-menu bg-dblue"
-                aria-labelledby="navbarDropdown"
-              >
-                <a class="dropdown-item" href="#">Sowcarpet</a>
-                <a class="dropdown-item" href="#">Kilpauk</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Purasaiwakkam</a>
-              </div>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('logout')}}">Sign Out</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
-              Search
-            </button>
-            <a
-              href="{{url_for('logout')}}"
-              class="btn btn-primary my-2 my-sm-0 ml-2"
-              >Logout</a
-            >
-          </form>
         </div>
       </nav>
       <!-- Main body -->
@@ -91,31 +56,31 @@
         <!-- Order History -->
         <div class="container requirements-list-container">
           <div class="row">
-            <h4 class="ml-3 mb-3">Order History</h4>
+            <h4 class="ml-3 mb-3">Donors</h4>
             <div class="col-sm-12">
               <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                  <h5 class="card-title">{{data2[i]["orphanage_name"]}}</h5>
-                  <p class="card-text">Order ID: {{data[i]["id"]}}</p>
-                  <p class="card-text">Item name: {{data[i]["item_name"]}}</p>
-                  <p class="card-text">Quantity: {{data[i]["quantity"]}}</p>
-                  <p class="card-text">Timestamp: {{data[i]["timestamp"]}}</p>
+                  <h5 class="card-title">Donor Name</h5>
+                  <p class="card-text">Order ID:</p>
+                  <p class="card-text">Item name:</p>
+                  <p class="card-text">Quantity:</p>
+                  <p class="card-text">Timestamp:</p>
+                  <p class="card-text">Mobile no:</p>
                 </div>
               </div>
             </div>
-            {% for i in range(0, data|length) %}
             <div class="col-sm-12">
               <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                  <h5 class="card-title">{{data2[i]["orphanage_name"]}}</h5>
-                  <p class="card-text">Order ID: {{data[i]["id"]}}</p>
-                  <p class="card-text">Item name: {{data[i]["item_name"]}}</p>
-                  <p class="card-text">Quantity: {{data[i]["quantity"]}}</p>
-                  <p class="card-text">Timestamp: {{data[i]["timestamp"]}}</p>
+                  <h5 class="card-title">donor name</h5>
+                  <p class="card-text">Order ID:</p>
+                  <p class="card-text">Item name:</p>
+                  <p class="card-text">Quantity:</p>
+                  <p class="card-text">Timestamp:</p>
+                  <p class="card-text">Mobile no:</p>
                 </div>
               </div>
             </div>
-            {% endfor %}
             <!-- <div class="col-sm-12">
               <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
