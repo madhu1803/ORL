@@ -22,10 +22,11 @@ config = {
     'autocommit': True
 }
 
+
 @app.before_request
 def do_something_when_a_request_comes_in():
     if request.endpoint == "or_profile":
-	    # tracking.track_visitor()
+        # tracking.track_visitor()
         tracking2.track()
 
 # admin modules
@@ -191,7 +192,7 @@ def rejectedvieworphanages():
     return render_template('Admindashboard-rejecteddetails.html')
 
 
-@app.route('/login')
+@app.route('/main')
 def login():
     return render_template('MainLogin.html')
 
@@ -226,7 +227,7 @@ def logout():
     session.pop("user")
     if "user" not in session:
         print("Logged Out")
-    return redirect('/login')
+    return redirect('/main')
 
 
 @app.route('/submitOrphanageLogin', methods=['POST'])
@@ -447,7 +448,7 @@ def submitLogin():
         return "No users found"
 
 
-@app.route('/signup')
+@app.route('/donor/signup')
 def signup():
     return render_template('Donorsignup.html')
 

@@ -35,9 +35,6 @@
         <!-- Left Container -->
         <div class="login-left-container col-lg-6 d-none d-lg-block">
           <h2 class="text-white left-text">Orphanage Resource Locator</h2>
-          <div style="text-align: center" class="left-container-links">
-            <a href="{{url_for('signup')}}" class="text-success">Signup</a>
-          </div>
         </div>
         <!-- Right Container -->
         <div class="login-right-container col-lg-6">
@@ -49,26 +46,32 @@
               for msg in messages %} {% if msg == '/orphanage/login' %}
               <form action="{{url_for('submitOrphanageLogin')}}" method="POST">
                 <div class="form-group">
-                  <label for="email">Email address</label>
                   <input
                     type="email"
                     class="form-control mt-3"
                     id="email"
                     name="email"
+                    placeholder="Email"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="password">Password</label>
                   <input
                     type="password"
-                    class="form-control mt-3"
+                    class="form-control"
                     id="password1"
                     name="password"
+                    placeholder="Password"
                   />
                 </div>
-                <button type="submit" class="btn btn-block bg-blue mt-3">
+                <button
+                  type="submit"
+                  class="btn btn-block btn-success mt-3 mb-3"
+                >
                   Login
                 </button>
+                <a href="{{url_for('login')}}" class="text-success">
+                  Back to Main Menu
+                </a>
               </form>
               {% elif msg == '/admin/login' %}
               <form action="{{url_for('submitAdminLogin')}}" method="POST">
@@ -90,9 +93,12 @@
                     placeholder="Password"
                   />
                 </div>
-                <button type="submit" class="btn-success btn-block mt-3">
+                <button type="submit" class="btn-success btn-block mt-3 mb-3">
                   Login
                 </button>
+                <a href="{{url_for('login')}}" class="text-success">
+                  Back to Main Menu
+                </a>
               </form>
               {% else %}
               <form action="{{url_for('submitLogin')}}" method="POST">
@@ -114,9 +120,12 @@
                     placeholder="Password"
                   />
                 </div>
-                <button type="submit" class="btn-success btn-block mt-3">
+                <button type="submit" class="btn-success btn-block mt-3 mb-3">
                   Login
                 </button>
+                <a href="{{url_for('login')}}" class="text-success">
+                  Back to Main Menu
+                </a>
               </form>
               {% endif %} {% endfor %} {% else %}
               <form action="{{url_for('submitLogin')}}" method="POST">
@@ -138,9 +147,15 @@
                     placeholder="Password"
                   />
                 </div>
-                <button type="submit" class="btn btn-block btn-success mt-3">
+                <button
+                  type="submit"
+                  class="btn btn-block btn-success mt-3 mb-3"
+                >
                   Login
                 </button>
+                <a href="{{url_for('login')}}" class="text-success">
+                  Back to Main Menu
+                </a>
               </form>
               {% endif %} {% endwith %}
             </div>
