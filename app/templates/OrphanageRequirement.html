@@ -86,22 +86,23 @@
         <!-- Order History -->
         <div class="container requirements-list-container">
           <h4 class="ml-3 mb-3">Donors</h4>
-          <p class="ml-3 mb-3">Requirement Item Name</p>
-          <p class="ml-3 mb-3">Qty Required : 10</p>
+          <p class="ml-3 mb-3">Requirement Item Name: {{data2[0].item_name}}</p>
+          <p class="ml-3 mb-3">Qty Required : {{data2[0].quantity}}</p>
           <div class="row">
-            <div class="col-sm-12">
-              <div class="card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                  <h5 class="card-title">Donor Name</h5>
-                  <p class="card-text">Order ID:</p>
-                  <p class="card-text">Item name:</p>
-                  <p class="card-text">Quantity:</p>
-                  <p class="card-text">Timestamp:</p>
-                  <p class="card-text">Mobile no:</p>
+            {% for i in range(0, data|length) %}
+              <div class="col-sm-12">
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                  <div class="card-body">
+                    <h5 class="card-title">Donor Name: {{data[i].donor_name}}</h5>
+                    <p class="card-text">Order ID: {{data[i].id}}</p>
+                    <p class="card-text">Quantity: {{data[i].quantity}}</p>
+                    <p class="card-text">Timestamp: {{data[i].timestamp}}</p>
+                    <p class="card-text">Mobile no: {{data[i].phone_number}}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-12">
+            {%endfor%}
+            <!-- <div class="col-sm-12">
               <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
                   <h5 class="card-title">donor name</h5>
@@ -112,7 +113,7 @@
                   <p class="card-text">Mobile no:</p>
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- <div class="col-sm-12">
               <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">

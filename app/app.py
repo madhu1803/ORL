@@ -183,16 +183,10 @@ def vieworphanages(id = 12):
              for row in results]
     cursor.close()
     return render_template('Admindashboard-viewdetails.html', data= final)
-    
+
 @app.route('/orphanage/money-history')
 def moneyhistoryDonor():
     return render_template('moneyHistory-Orphanage.html')
-
-
-@app.route('/admin/dashboard/view-orphanage-details')
-def vieworphanages():
-    return render_template('Admindashboard-viewdetails.html')
-
 
 @app.route('/viewfile/registration/<id>')
 def viewfile(id):
@@ -228,6 +222,7 @@ def rejectOrphanage():
     cursor.close()
     connection.close()
     return redirect('/admin/dashboard')
+
 @app.route('/admin/dashboard/rejected-orphanage-details')
 def rejectedvieworphanages():
     return render_template('Admindashboard-rejecteddetails.html')
@@ -263,12 +258,28 @@ def orphanagelogin():
     return render_template('login.html')
 
 
-@app.route('/orphanage/donation-donor')
-def orphanagerequirement():
-    path = request.path
-    flash(path)
-    print(path)
-    return render_template('OrphanageRequirement.html')
+@app.route('/orphanage/donation-donor/<item>')
+def orphanagerequirement(item):
+    # path = request.path
+    # flash(path)
+    # print(path)
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT transactions.id, transactions.timestamp, phone_number, CONCAT(first_name, ' ', last_name) AS donor_name, transactions.quantity, transactions.item_name FROM  users INNER JOIN transactions ON transactions.user_id = users.user_id WHERE transactions.or_user_id = %s AND transactions.item_name LIKE %s"
+    item_name = "%"+ item + "%"
+    cursor.execute(query, (session['user'], item_name, ))
+    results = cursor.fetchall()
+    final = [dict(zip([key[0] for key in cursor.description], row))
+                for row in results]
+    query = "SELECT item_name, quantity FROM requirements WHERE or_user_id = %s AND item_name LIKE %s"
+    cursor.execute(query, (session['user'], item_name, ))
+    results = cursor.fetchall()
+    final2 = [dict(zip([key[0] for key in cursor.description], row))
+                for row in results]
+    cursor.close()
+    connection.close()
+    
+    return render_template('OrphanageRequirement.html', data= final, data2 = final2)
 
 
 @app.route('/logout')

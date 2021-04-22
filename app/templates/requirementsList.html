@@ -110,7 +110,7 @@
                   <td>{{data[i].valid_till}}</td>
                   <td>{{data[i].timestamp}}</td>
                   <td>
-                    <a href="{{url_for('orphanagerequirement')}}">
+                    <a href="{{url_for('orphanagerequirement', item=data[i].item_name)}}">
                       View donors
                     </a>
                   </td>
