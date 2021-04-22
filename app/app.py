@@ -5,10 +5,12 @@ import mysql.connector
 import json
 import os
 import razorpay
+# import tracking
+import tracking2
 
 app = Flask(__name__)
 app.secret_key = "hello"
-app.permanent_session_lifetime = timedelta(minutes=60)
+app.permanent_session_lifetime = timedelta(minutes=10)
 app.config['UPLOAD_FOLDER'] = 'orphanage_docs'
 
 config = {
@@ -19,6 +21,12 @@ config = {
     'database': 'orl',
     'autocommit': True
 }
+
+@app.before_request
+def do_something_when_a_request_comes_in():
+    if request.endpoint == "or_profile":
+	    # tracking.track_visitor()
+        tracking2.track()
 
 # admin modules
 @app.route('/admin/login')
