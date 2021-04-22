@@ -171,9 +171,17 @@ def rejectedorphanages():
     return render_template('Admindashboard-rejected.html', data=details)
 
 
-@app.route('/admin/dashboard/view-orphanage-details')
-def vieworphanages():
-    return render_template('Admindashboard-viewdetails.html')
+@app.route('/admin/dashboard/view-orphanage-details/<id>')
+def vieworphanages(id = 12):
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "SELECT * FROM orphanage_users ou INNER JOIN orphanage_addresses oa ON ou.or_user_id = oa.or_user_id WHERE ou.or_user_id = %s"
+    cursor.execute(query, (id,))
+    results = cursor.fetchall()
+    final = [dict(zip([key[0] for key in cursor.description], row))
+             for row in results]
+    cursor.close()
+    return render_template('Admindashboard-viewdetails.html', data= final)
 
 
 @app.route('/viewfile/registration/<id>')
@@ -185,7 +193,31 @@ def viewfile(id):
     results = cursor.fetchall()
     return send_from_directory(app.config['UPLOAD_FOLDER'], results[0][0])
 
+@app.route('/admin/approve-orphanage', methods=['POST'])
+def approveOrphanage():
+    or_user_id = request.form.get('id')
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "UPDATE approvals SET account_status = 'approved' WHERE or_user_id = %s"
+    cursor.execute(query, (or_user_id,))
+    query = "UPDATE orphanage_users SET account_status = 1 WHERE or_user_id = %s"
+    cursor.execute(query, (or_user_id,))
+    cursor.close()
+    connection.close()
+    return redirect('/admin/dashboard')
 
+@app.route('/admin/reject-orphanage', methods=['POST'])
+def rejectOrphanage():
+    or_user_id = request.form.get('id')
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    query = "UPDATE approvals SET account_status = 'rejected' WHERE or_user_id = %s"
+    cursor.execute(query, (or_user_id,))
+    query = "UPDATE orphanage_users SET account_status = 0 WHERE or_user_id = %s"
+    cursor.execute(query, (or_user_id,))
+    cursor.close()
+    connection.close()
+    return redirect('/admin/dashboard')
 @app.route('/admin/dashboard/rejected-orphanage-details')
 def rejectedvieworphanages():
     return render_template('Admindashboard-rejecteddetails.html')
@@ -244,11 +276,14 @@ def submitOrphanageLogin():
              for row in results]
     if cursor.rowcount != 0:
         if(final[0]["email_id"] == email) and final[0]["password"] == password:
-            user = final[0]["or_user_id"]
-            session['user'] = user
-            cursor.close()
-            connection.close()
-            return redirect(url_for('dashboard'))
+            if final[0]['account_status'] == 1:
+                user = final[0]["or_user_id"]
+                session['user'] = user
+                cursor.close()
+                connection.close()
+                return redirect(url_for('dashboard'))
+            else:
+                return "Orphanage Not Approved. Please login after successful approval."
         else:
             cursor.close()
             connection.close()
@@ -516,7 +551,7 @@ def getOrphanages():
     print(type(lon))
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
-    query = "SELECT *, SQRT(POW(69.1 * (latitude - %s), 2) + POW(69.1 * (%s - longitude) * COS(latitude / 57.3), 2)) AS distance FROM orphanage_addresses INNER JOIN orphanage_users ON orphanage_addresses.or_user_id = orphanage_users.or_user_id HAVING distance < 25 ORDER BY distance;"
+    query = "SELECT *, SQRT(POW(69.1 * (latitude - %s), 2) + POW(69.1 * (%s - longitude) * COS(latitude / 57.3), 2)) AS distance FROM orphanage_addresses INNER JOIN orphanage_users ON orphanage_addresses.or_user_id = orphanage_users.or_user_id WHERE orphanage_users.account_status = 1 HAVING distance < 25 ORDER BY distance;"
     cursor.execute(query, (lat, lon,))
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row))

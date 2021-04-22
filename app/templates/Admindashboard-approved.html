@@ -89,42 +89,11 @@
                     <td>{{data[i].area}}, {{data[i].city}}</td>
                     <td>{{data[i].timestamp}}</td>
                     <td>
-                      <button type="submit" class="btn btn-success">
+                      <a class="btn btn-success" href="{{url_for('vieworphanages', id=data[i].or_user_id)}}">
                         View Details
-                      </button>
                     </td>
                   </tr>
                 {% endfor %}
-                <!-- <tr>
-                  <th scope="row">1</th>
-                  <td>Karunai Illam</td>
-                  <td>koyambedu,chennai</td>
-                  <td>19/02/2021</td>
-                  <td>
-                      <a class="btn bg-black text-white" href="{{url_for('vieworphanages')}}">
-                        View details
-                        </a>
-                      
-                  </td>
-                </tr> -->
-                <!-- <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr> -->
               </tbody>
             </table>
           </div>

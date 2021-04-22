@@ -50,45 +50,42 @@
       <div class="container about-container">
         <div class="card shadow pt-3 pb-3 mb-5 bg-white rounded">
           <div class="card-body">
-            <p class="display-5" id="name">Orphanage Name : </p>
+            <p class="display-5" id="name">Orphanage Name : {{data[0].orphanage_name}}</p>
             <p id="address">
-              Address : 6th cross street , Vadapalani , chennai - 600089.
+              Address : {{data[0].address_line1}}<br>{{data[0].addresss_line2}}<br>{{data[0].addresss_line3}}
             </p>
-            <p id="phone">Mobile Number +91 123456789</p>
+            <p id="phone">Mobile Number: {{data[0].phone_number}}</p>
             <p class="card-text">
-              Care Taker : Mr. <span id="caretaker"></span>
-            </p>
-            <p class="card-text">
-              No of Children : <span id="children"></span>
+              Care Taker : Mr. <span id="caretaker">{{data[0].caretaker_name}}</span>
             </p>
             <p class="card-text">
-              Phone No.: <span id="phone_contact"></span>
+              No of Children : <span id="children">{{data[0].no_of_children}}</span>
             </p>
-            <p class="card-text">Email : <span id="email"></span></p>
+            <p class="card-text">Email : <span id="email">{{data[0].email_id}}</span></p>
             <h5 class="card-title text-success">About</h5>
             <p class="card-text" id="about">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy
-              text ever since the 1500s, when an unknown printer took a galley
-              of type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              {{data[0].about}}
             </p>
             <p>Documents</p>
-            <p><embed src="/viewfile/registration/11" type="application/pdf"></p>
-            <a href="#" class="btn btn-success">Approve</a>
-            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#rejected-modal">Reject</a>
+            <p><embed width="100%" src="/viewfile/registration/11" type="application/pdf" ></p>
+            <form action="{{url_for('approveOrphanage')}}" method="post">
+              <input type="hidden" name="id", value="{{data[0].or_user_id}}">
+              <input type="submit" value="Approve" class="btn btn-success">
+            </form>
+            <form action="{{url_for('rejectOrphanage')}}" method="post">
+              <input type="hidden" name="id", value="{{data[0].or_user_id}}">
+              <input type="submit" value="Reject" class="btn btn-danger">
+            </form>
+            <!-- <a href="#" class="btn btn-success">Approve</a> -->
+            <!-- <a href="#" class="btn btn-danger">Reject</a> -->
+            <!-- <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#rejected-modal">Reject</a> -->
           </div>
         </div>
       </div>
     </div>
     <!-- rejected modal -->
     <!-- Modal -->
-    <div class="modal fade" id="rejected-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="rejected-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -106,7 +103,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
