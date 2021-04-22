@@ -29,12 +29,15 @@ def do_something_when_a_request_comes_in():
         tracking2.track()
 
 # admin modules
+
+
 @app.route('/admin/login')
 def adminLogin():
     path = request.path
     flash(path)
     print(path)
     return render_template('login.html')
+
 
 @app.route('/submitAdminLogin', methods=['POST'])
 def submitAdminLogin():
@@ -67,6 +70,7 @@ def submitAdminLogin():
         connection.close()
         return "No users found"
 
+
 @app.route('/admin/dashboard')
 def admin():
     connection = mysql.connector.connect(**config)
@@ -86,7 +90,7 @@ def admin():
     results2 = cursor.fetchall()
     cursor.close()
     connection.close()
-    return render_template('Admindashboard.html', approved= results[0][0], pending= results1[0][0], rejected= results2[0][0])
+    return render_template('Admindashboard.html', approved=results[0][0], pending=results1[0][0], rejected=results2[0][0])
 
 
 @app.route('/admin/dashboard/approved-orphanages')
@@ -97,7 +101,7 @@ def approvedorphanages():
     cursor.execute(query)
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row))
-                 for row in results]
+             for row in results]
     cursor.close()
     details = []
     for item in final:
@@ -106,11 +110,11 @@ def approvedorphanages():
         cursor.execute(query, (item['or_user_id'],))
         results = cursor.fetchall()
         final1 = [dict(zip([key[0] for key in cursor.description], row))
-                    for row in results]
+                  for row in results]
         details.append(final1[0])
         cursor.close()
     connection.close()
-    return render_template('Admindashboard-approved.html', data= details)
+    return render_template('Admindashboard-approved.html', data=details)
 
 
 @app.route('/admin/dashboard/pending-orphanages')
@@ -121,7 +125,7 @@ def pendingorphanages():
     cursor.execute(query)
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row))
-                 for row in results]
+             for row in results]
     cursor.close()
     details = []
     for item in final:
@@ -130,7 +134,7 @@ def pendingorphanages():
         cursor.execute(query, (item['or_user_id'],))
         results = cursor.fetchall()
         final1 = [dict(zip([key[0] for key in cursor.description], row))
-                    for row in results]
+                  for row in results]
         details.append(final1[0])
         cursor.close()
     print("Final 1")
@@ -138,7 +142,7 @@ def pendingorphanages():
     print("Details")
     print(details)
     connection.close()
-    return render_template('Admindashboard-pending.html', data= details)
+    return render_template('Admindashboard-pending.html', data=details)
 
 
 @app.route('/admin/dashboard/rejected-orphanages')
@@ -149,7 +153,7 @@ def rejectedorphanages():
     cursor.execute(query)
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row))
-                 for row in results]
+             for row in results]
     cursor.close()
     details = []
     for item in final:
@@ -158,27 +162,30 @@ def rejectedorphanages():
         cursor.execute(query, (item['or_user_id'],))
         results = cursor.fetchall()
         final1 = [dict(zip([key[0] for key in cursor.description], row))
-                    for row in results]
+                  for row in results]
         details.append(final1[0])
         cursor.close()
     print("Details")
     print(details)
     connection.close()
-    return render_template('Admindashboard-rejected.html', data= details)
+    return render_template('Admindashboard-rejected.html', data=details)
 
 
 @app.route('/admin/dashboard/view-orphanage-details')
 def vieworphanages():
     return render_template('Admindashboard-viewdetails.html')
 
+
 @app.route('/viewfile/registration/<id>')
 def viewfile(id):
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
-    query = "SELECT registration FROM orphanage_files WHERE or_user_id = %s" 
-    cursor.execute(query,(id,))
+    query = "SELECT registration FROM orphanage_files WHERE or_user_id = %s"
+    cursor.execute(query, (id,))
     results = cursor.fetchall()
     return send_from_directory(app.config['UPLOAD_FOLDER'], results[0][0])
+
+
 @app.route('/admin/dashboard/rejected-orphanage-details')
 def rejectedvieworphanages():
     return render_template('Admindashboard-rejecteddetails.html')
@@ -186,12 +193,17 @@ def rejectedvieworphanages():
 
 @app.route('/login')
 def login():
+    return render_template('MainLogin.html')
+
+
+@app.route('/donor/login')
+def login2():
     return render_template('login.html')
 
 # orphanage modules
 
 
-@app.route('/orphanage/register')
+@app.route('/orphanage/signup')
 def orphanageregister():
     return render_template('Orphanagesignup.html')
 
@@ -292,6 +304,7 @@ def submitSignup():
         connection.close()
         return "Error"
 
+
 @app.route('/submitOrphanageSignup', methods=['POST'])
 def submitOrphanageSignup():
     orphanage_name = request.form.get('orphanage_name')
@@ -312,10 +325,12 @@ def submitOrphanageSignup():
     password = request.form.get('password')
     confirm_password = request.form.get('confirm_password')
     registration = request.files['registration']
-    registration_path = os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(registration.filename))
+    registration_path = os.path.join(
+        app.config['UPLOAD_FOLDER'], secure_filename(registration.filename))
     registration.save(registration_path)
     other = request.files['other']
-    other_path = os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(other.filename))
+    other_path = os.path.join(
+        app.config['UPLOAD_FOLDER'], secure_filename(other.filename))
     other.save(other_path)
     if password == confirm_password:
         connection = mysql.connector.connect(**config)
@@ -338,16 +353,18 @@ def submitOrphanageSignup():
                 else:
                     print("Inside else 2")
                     query = "INSERT INTO orphanage_users (orphanage_name, phone_number, email_id, caretaker_name, no_of_children, about, password) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                    cursor.execute(query, (orphanage_name, mobile, email, caretaker_name, no_of_children, about, password,))
+                    cursor.execute(query, (orphanage_name, mobile, email,
+                                           caretaker_name, no_of_children, about, password,))
                     cursor.close()
                     query = "SELECT * FROM orphanage_users ORDER BY or_user_id DESC LIMIT 1"
                     cursor.execute(query)
                     results = cursor.fetchall()
                     final = [dict(zip([key[0] for key in cursor.description], row))
-                        for row in results]
+                             for row in results]
                     id = final[0]["or_user_id"]
                     query = "INSERT INTO orphanage_addresses (or_user_id, address_line1, address_line2, address_line3, area, city, pin_code, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                    cursor.execute(query,(id, address1, address2, address3, area, city, pin, latitude, longitude,))
+                    cursor.execute(
+                        query, (id, address1, address2, address3, area, city, pin, latitude, longitude,))
                     cursor.close()
                     query = "INSERT INTO orphanage_files (or_user_id, registration, other) VALUES (%s, %s, %s)"
                     cursor.execute(query, (id, registration_path, other_path,))
@@ -356,18 +373,20 @@ def submitOrphanageSignup():
                     return "Success"
         else:
             query = "INSERT INTO orphanage_users (orphanage_name, phone_number, email_id, caretaker_name, no_of_children, about, password) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            cursor.execute(query, (orphanage_name, mobile, email, caretaker_name, no_of_children, about, password,))
+            cursor.execute(query, (orphanage_name, mobile, email,
+                                   caretaker_name, no_of_children, about, password,))
             cursor.close()
             cursor = connection.cursor()
             query = "SELECT * FROM orphanage_users ORDER BY or_user_id DESC LIMIT 1"
             cursor.execute(query)
             results = cursor.fetchall()
             final = [dict(zip([key[0] for key in cursor.description], row))
-                 for row in results]
+                     for row in results]
             if final:
                 id = final[0]["or_user_id"]
                 query = "INSERT INTO orphanage_addresses (or_user_id, address_line1, address_line2, address_line3, area, city, pin_code, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                cursor.execute(query,(id, address1, address2, address3, area, city, pin, latitude, longitude,))
+                cursor.execute(query, (id, address1, address2,
+                                       address3, area, city, pin, latitude, longitude,))
                 cursor.close()
                 cursor = connection.cursor()
                 query = "INSERT INTO orphanage_files (or_user_id, registration, other) VALUES (%s, %s, %s)"
@@ -375,11 +394,12 @@ def submitOrphanageSignup():
                 cursor.close()
                 cursor = connection.cursor()
                 query = "INSERT INTO approvals (or_user_id) VALUES (%s)"
-                cursor.execute(query,(id,))
+                cursor.execute(query, (id,))
                 cursor.close()
             else:
                 query = "INSERT INTO orphanage_addresses (or_user_id, address_line1, address_line2, address_line3, area, city, pin_code, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                cursor.execute(query,(1, address1, address2, address3, area, city, pin, latitude, longitude,))
+                cursor.execute(query, (1, address1, address2,
+                                       address3, area, city, pin, latitude, longitude,))
                 cursor.close()
                 cursor = connection.cursor()
                 query = "INSERT INTO orphanage_files (or_user_id, registration, other) VALUES (%s, %s, %s)"
@@ -387,12 +407,13 @@ def submitOrphanageSignup():
                 cursor.close()
                 cursor = connection.cursor()
                 query = "INSERT INTO approvals (or_user_id) VALUES (%s)"
-                cursor.execute(query,(1,))
+                cursor.execute(query, (1,))
                 cursor.close()
             connection.close()
             return "Success"
     else:
         return redirect('/orphanage/register')
+
 
 @app.route('/submitLogin', methods=['POST'])
 def submitLogin():
@@ -559,6 +580,7 @@ def viewRequirements():
     else:
         return redirect('/orphanage/login')
 
+
 @app.route('/donate/money/<id>', methods=['POST'])
 def donateMoney(id):
     connection = mysql.connector.connect(**config)
@@ -568,7 +590,8 @@ def donateMoney(id):
     query = "INSERT INTO transactions (user_id, or_user_id, item_name, quantity) VALUES (%s, %s, %s, %s)"
     cursor.execute(query, (user, id, "Money", amount,))
     cursor.close()
-    return redirect(url_for('donateMoneyCheckout', orid= id))
+    return redirect(url_for('donateMoneyCheckout', orid=id))
+
 
 @app.route('/donate/money/<orid>/checkout')
 def donateMoneyCheckout(orid):
@@ -579,10 +602,13 @@ def donateMoneyCheckout(orid):
     cursor.execute(query, (user, orid,))
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row))
-                 for row in results]
-    client = razorpay.Client(auth= ("rzp_test_4eKROKb9Ml5qLs", "cXy7XdRy8d4GLcVQEbH59vz9"))
-    payment = client.order.create({'amount':(int(final[0]['quantity'])*100), 'currency': "INR", 'payment_capture': '1'})
-    return render_template('checkout.html', payment= payment)
+             for row in results]
+    client = razorpay.Client(
+        auth=("rzp_test_4eKROKb9Ml5qLs", "cXy7XdRy8d4GLcVQEbH59vz9"))
+    payment = client.order.create({'amount': (
+        int(final[0]['quantity'])*100), 'currency': "INR", 'payment_capture': '1'})
+    return render_template('checkout.html', payment=payment)
+
 
 @app.route('/donate/item/<orid>', methods=["POST"])
 def donateItem(orid):
@@ -592,12 +618,14 @@ def donateItem(orid):
     item_name = request.form.get('item_name')
     quantity = request.form.get('quantity')
     query = "INSERT INTO transactions (user_id, or_user_id, item_name, quantity) VALUES (%s, %s,%s, %s)"
-    cursor.execute(query,(user, orid, item_name, quantity))
+    cursor.execute(query, (user, orid, item_name, quantity))
     return redirect('/success')
+
 
 @app.route('/success')
 def success():
     return render_template('donateSuccess.html')
+
 
 @app.route('/search', methods=["POST", "GET"])
 def search():
@@ -605,14 +633,15 @@ def search():
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
     query = "SELECT * FROM orphanage_users ou INNER JOIN orphanage_addresses oa ON oa.or_user_id = ou.or_user_id WHERE (orphanage_name LIKE %s) OR (address_line1 LIKE %s) OR (address_line2 LIKE %s) OR (address_line3 LIKE %s) OR (area LIKE %s) OR (city LIKE %s)"
-    cursor.execute(query,("%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%"))
+    cursor.execute(query, ("%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery +
+                           "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%", "%" + seearchQuery + "%"))
     results = cursor.fetchall()
     final = [dict(zip([key[0] for key in cursor.description], row))
-                 for row in results]
+             for row in results]
     print("Search")
     print(final)
-    return render_template('searchResults.html', results= final)
-    
+    return render_template('searchResults.html', results=final)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, ssl_context='adhoc')

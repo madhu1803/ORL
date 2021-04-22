@@ -15,6 +15,11 @@ body {
   color: white !important;
 }
 
+.bg-blue {
+  background-color: #5cb85c !important;
+  color: white !important;
+}
+
 /* navbar */
 .navbar a {
   color: #5cb85c !important;
