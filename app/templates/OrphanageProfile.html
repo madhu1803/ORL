@@ -106,11 +106,11 @@
                 />
               </div>
               <div class="col-lg-6">
-                <h1 class="display-5" id="name">Orphanage</h1>
+                <h1 class="display-5" id="name">{{data[0].orphanage_name}}</h1>
                 <p id="address">
-                  6th cross street , Vadapalani , chennai - 600089.
+                  {{data[0].address_line1}}, {{data[0].address_line2}}, {{data[0].area}}, {{data[0].city}} - {{data[0].pin_code}}
                 </p>
-                <p id="phone">+91 123456789</p>
+                <p id="phone">{{data[0].phone_number}}</p>
                 <p>Make a donation instantly!</p>
                 <a
                     href="#"
@@ -129,27 +129,18 @@
             <div class="card-body">
               <h5 class="card-title text-success">About</h5>
               <p class="card-text" id="about">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
+                {{data[0].about}}
               </p>
               <p class="card-text">
-                Care Taker : Mr. <span id="caretaker"></span>
+                Care Taker : Mr. <span id="caretaker">{{data[0].caretaker_name}}</span>
               </p>
               <p class="card-text">
-                No of Children : <span id="children"></span>
+                No of Children : <span id="children">{{data[0].no_of_children}}</span>
               </p>
               <p class="card-text">
-                Phone No.: <span id="phone_contact"></span>
+                Phone No.: <span id="phone_contact">{{data[0].phone_number}}</span>
               </p>
-              <p class="card-text">Email : <span id="email"></span></p>
+              <p class="card-text">Email : <span id="email">{{data[0].email_id}}</span></p>
               <!-- <a href="#" class="btn btn-success">Go somewhere</a> -->
             </div>
           </div>
@@ -158,23 +149,6 @@
         <div class="container requirements-list-container pb-2">
           <div class="row">
             <h4 class="ml-3 mb-3">Requirements List</h4>
-            <div class="col-sm-12">
-              <div class="card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                  <h5 class="card-title text-success">Clothes</h5>
-                  <p class="card-text">Required: 25</p>
-                  <p class="card-text">Request Valid Till: 19/02/2021</p>
-                  <a href="#" class="btn bg-black text-white">Contact Us</a>
-                  <a
-                    href="#"
-                    class="btn btn-success"
-                    data-toggle="modal"
-                    data-target="#donate-modal"
-                    >Donate Now</a
-                  >
-                </div>
-              </div>
-            </div>
             {% for data in data2 %}
             <div class="col-sm-12">
               <div class="card shadow p-3 mb-5 bg-white rounded">
@@ -314,19 +288,6 @@
     ></script>
     <!-- Custom JS -->
     <script src="{{url_for('static', filename='JS/home.js')}}"></script>
-    <script>
-      document.getElementById("name").innerHTML = "{{data[0].orphanage_name}}";
-      document.getElementById("phone").innerHTML = "{{data[0].phone_number}}";
-      document.getElementById("address").innerHTML =
-        "{{data[0].address_line1}}, {{data[0].address_line2}}, {{data[0].area}}, {{data[0].city}} - {{data[0].pin_code}}";
-      document.getElementById("about").innerHTML = "{{data[0].about}}";
-      document.getElementById("caretaker").innerHTML =
-        "{{data[0].caretaker_name}}";
-      document.getElementById("children").innerHTML =
-        "{{data[0].no_of_children}}";
-      document.getElementById("phone_contact").innerHTML =
-        "{{data[0].phone_number}}";
-      document.getElementById("email").innerHTML = "{{data[0].email_id}}";
-    </script>
+    
   </body>
 </html>
