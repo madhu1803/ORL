@@ -131,15 +131,13 @@ def pendingorphanages():
     details = []
     for item in final:
         cursor = connection.cursor()
-        query = "SELECT orphanage_name, area, city FROM orphanage_users ou INNER JOIN orphanage_addresses oa ON ou.or_user_id = oa.or_user_id INNER JOIN orphanage_files of ON oa.or_user_id = of.or_user_id WHERE ou.or_user_id = %s"
+        query = "SELECT oa.or_user_id, orphanage_name, area, city FROM orphanage_users ou INNER JOIN orphanage_addresses oa ON ou.or_user_id = oa.or_user_id INNER JOIN orphanage_files of ON oa.or_user_id = of.or_user_id WHERE ou.or_user_id = %s"
         cursor.execute(query, (item['or_user_id'],))
         results = cursor.fetchall()
         final1 = [dict(zip([key[0] for key in cursor.description], row))
                   for row in results]
         details.append(final1[0])
         cursor.close()
-    print("Final 1")
-    print(final1)
     print("Details")
     print(details)
     connection.close()
