@@ -198,12 +198,13 @@ def moneyhistoryDonor():
 
 @app.route('/viewfile/registration/<id>')
 def viewfile(id):
+    print("Inside file")
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
     query = "SELECT registration FROM orphanage_files WHERE or_user_id = %s"
     cursor.execute(query, (id,))
     results = cursor.fetchall()
-    return send_from_directory(app.config['UPLOAD_FOLDER'], results[0][0])
+    return send_from_directory(app.config['UPLOAD_FOLDER'], results[0][0].split('/')[1])
 
 @app.route('/admin/approve-orphanage', methods=['POST'])
 def approveOrphanage():
